@@ -31,6 +31,7 @@ def authenticate_user(request):
 
 def logout(request):
     logout_user(request)
+    return HttpResponseRedirect(reverse('index'))
 
 
 def register(request):
