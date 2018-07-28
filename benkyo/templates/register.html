@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Register - Benkyo{% endblock %}
+
+{% block styles %}
+  <link rel="stylesheet" href="{{ static('css/login.css') }}" >
+{% endblock %}
+
+{% block content %}
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+          
+          <br>
+          <h1>Register</h1>
+          <br>
+
+          <form action="{{ url('create-user') }}" method="POST">
+
+            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+
+            {% if password_mismatch %}
+              <p class="text-danger">Passwords do not match!</p>
+            {% endif %}
+
+            <div class="form-group">
+                <label for="input-email" hidden></label>
+                <input type="text" class="form-control" id="input-email" placeholder="Email" name="email">
+              </div>
+          
+            <div class="form-group">
+              <label for="input-username" hidden></label>
+              <input type="text" class="form-control" id="input-username" placeholder="Username" name="username">
+            </div>
+
+            <div class="form-group">
+              <label for="input-password-1" hidden></label>
+              <input type="password" class="form-control" id="input-password-1" placeholder="Password" name="password">
+            </div>
+            
+            <div class="form-group">
+              <label for="input-password-2" hidden></label>
+              <input type="password" class="form-control" id="input-password-2" placeholder="Confirm Password" name="password-confirm">
+            </div>
+
+            <button type="submit" class="btn btn-outline-primary">Register</button>
+
+          </form>
+
+        </div>
+        <div class="col-md-4"></div>
+      </div>
+    </div>
+
+{% endblock %}

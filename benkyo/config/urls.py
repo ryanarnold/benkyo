@@ -22,6 +22,9 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('login/', views.login, name='login'),
     path('logout/', views.logout, name='logout'),
+    path('register/?(?P<password_mismatch>\d+)?/?', views.register, name='register'),
     path('register/', views.register, name='register'),
     path('authenticate-user/', views.authenticate_user, name='authenticate-user'),
+    path('create-user/', views.create_user, name='create-user'),
+    path('register-success/', views.register_success, name='register-success'),
 ]
