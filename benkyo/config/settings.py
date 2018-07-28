@@ -57,7 +57,7 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.jinja2.Jinja2',
         'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
-        'OPTIONS': {'environment': 'config.jinja2.Environment',}, 
+        'OPTIONS': {'environment': 'config.jinja2.environment',}, 
     },
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -131,4 +131,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
+STATIC_DIR = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = [STATIC_DIR,]
 STATIC_URL = '/static/'
+
+# Login
+
+LOGIN_URL = '/login/'
