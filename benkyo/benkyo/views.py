@@ -66,4 +66,9 @@ def register_success(request):
 
 @login_required
 def decks(request):
-    return render(request, 'index.html')
+    return render(request, 'decks.html')
+
+
+@login_required
+def decks_create(request):
+    return render(request, 'decks_create.html')
