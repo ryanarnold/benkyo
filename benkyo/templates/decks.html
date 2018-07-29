@@ -33,7 +33,7 @@
                 <td>{{ deck.name }}</td>
                 <td>45 cards</td>
                 <td><a href="#" class="text-center text-primary">Review</a></td>
-                <td><a href="#" class="text-center text-warning">Edit</a></td>
+                <td><a href="{{ url('decks-edit', args=(deck.deck_id,)) }}" class="text-center text-warning">Edit</a></td>
                 <td><a href="{{ url('decks-delete-confirm', args=(deck.deck_id,)) }}" class="text-center text-danger">Delete</a></td>
               </tr>
             {% endfor %}

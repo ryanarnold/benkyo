@@ -125,3 +125,22 @@ def decks_delete(request, deck_id):
 @login_required
 def decks_delete_successful(request):
     return render(request, 'decks_delete_successful.html')
+
+
+@login_required
+def decks_edit(request, deck_id):
+    deck = Deck.objects.get(deck_id=deck_id)
+
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        private = True if request.POST.get('private') == 'yes' else False
+
+        deck.name = name
+        deck.private = private
+        deck.save()
+
+    context = {
+        'deck': deck
+    }
+
+    return render(request, 'decks_edit.html', context)

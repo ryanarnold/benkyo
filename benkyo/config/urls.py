@@ -35,4 +35,6 @@ urlpatterns = [
     path('decks/<int:deck_id>/delete/confirm/', views.decks_delete_confirm, name='decks-delete-confirm'),
     path('decks/<int:deck_id>/delete/', views.decks_delete, name='decks-delete'),
     path('decks/delete/successful/', views.decks_delete_successful, name='decks-delete-successful'),
+
+    path('decks/<int:deck_id>/edit/', views.decks_edit, name='decks-edit'),
 ]
