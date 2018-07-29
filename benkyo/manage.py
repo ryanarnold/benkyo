@@ -4,6 +4,7 @@ import sys
 
 # Use pymysql instead my MySQLdb
 import pymysql
+
 pymysql.install_as_MySQLdb()
 
 if __name__ == "__main__":

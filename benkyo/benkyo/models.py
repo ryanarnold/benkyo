@@ -1,7 +1,6 @@
-from django.db.models import Model
-from django.db.models import CharField, AutoField, BooleanField, ForeignKey
-from django.db.models import CASCADE
 from django.contrib.auth.models import User
+from django.db.models import (CASCADE, AutoField, BooleanField, CharField,
+                              ForeignKey, Model)
 
 
 class Deck(Model):
