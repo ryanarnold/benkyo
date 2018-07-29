@@ -7,7 +7,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import Deck, DeckUser
+from .models import Deck, DeckUser, Card
 
 
 @login_required
@@ -70,6 +70,9 @@ def register_success(request):
 def decks(request):
     decks_of_user = DeckUser.objects.filter(user=request.user)
     decks = [deck.deck for deck in decks_of_user]
+
+    for deck in decks:
+        deck.card_count = Card.objects.filter(deck=deck).count()
 
     context = {
         'decks': decks
