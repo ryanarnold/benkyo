@@ -30,4 +30,5 @@ urlpatterns = [
 
     path('decks/', views.decks, name='decks'),
     path('decks/create/', views.decks_create, name='decks-create'),
+    path('decks/create/successful/', views.decks_create_successful, name='decks-create-successful'),
 ]
