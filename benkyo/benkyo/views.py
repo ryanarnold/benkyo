@@ -180,6 +180,30 @@ def cards_add(request, deck_id):
 
 
 @login_required
+def cards_edit(request, deck_id, card_id):
+    deck = Deck.objects.get(deck_id=deck_id)
+    card = Card.objects.get(card_id=card_id)
+
+    if request.method == 'POST':
+        front = request.POST.get('front')
+        back = request.POST.get('back')
+
+        card.front = front
+        card.back = back
+
+        card.save()
+
+        return HttpResponseRedirect(reverse('decks-edit', args=(deck_id,)))
+    
+    context = {
+        'deck': deck,
+        'card': card
+    }
+
+    return render(request, 'cards_edit.html', context)
+
+
+@login_required
 def cards_delete(request, deck_id, card_id):
     deck = Deck.objects.get(deck_id=deck_id)
     card = Card.objects.get(card_id=card_id)
