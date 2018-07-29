@@ -6,6 +6,7 @@ from django.contrib.auth import logout as logout_user
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.urls import reverse
+from .models import Deck, DeckUser
 
 
 @login_required
@@ -71,4 +72,26 @@ def decks(request):
 
 @login_required
 def decks_create(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        private = True if request.POST.get('private') == 'yes' else False
+
+        deck = Deck.objects.create(
+            name=name,
+            private=private
+        )
+
+        DeckUser.objects.create(
+            deck=deck,
+            user=request.user,
+            role_cd='O'
+        )
+
+        return HttpResponseRedirect(reverse('decks-create-successful'))
+
     return render(request, 'decks_create.html')
+
+
+@login_required
+def decks_create_successful(request):
+    return render(request, 'decks_create_successful.html')
