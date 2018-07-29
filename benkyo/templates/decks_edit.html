@@ -3,7 +3,7 @@
 {% block title %}Benkyo{% endblock %}
 
 {% block styles %}
-<link rel="stylesheet" href="{{ static('css/decks_create.css') }}" >
+  <link rel="stylesheet" href="{{ static('css/decks_create.css') }}" >
 {% endblock %}
 
 {% block content %}
@@ -42,6 +42,34 @@
           <a class="btn btn-outline-secondary" href="{{ url('decks') }}" role="button">Cancel</a>
 
         </form>
+
+        <br>
+        <h3>Deck Cards</h3>
+        <br>
+
+        <a class="btn btn-primary" href="{{ url('decks-create') }}" role="button">Add a Card</a>
+        <br><br>
+
+        <table class="table" id="decks">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Front</th>
+              <th>Back</th>
+              <th class="width-small"></th>
+              <th class="width-small"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>行く</td>
+              <td>to go</td>
+              <td><a href="#" class="text-center text-warning">Edit</a></td>
+              <td><a href="#" class="text-center text-danger">Delete</a></td>
+            </tr>
+          </tbody>
+        </table>
 
       </div>
       <div class="col-md-2"></div>
