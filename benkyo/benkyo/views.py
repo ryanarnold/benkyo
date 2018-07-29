@@ -67,7 +67,14 @@ def register_success(request):
 
 @login_required
 def decks(request):
-    return render(request, 'decks.html')
+    decks_of_user = DeckUser.objects.filter(user=request.user)
+    decks = [deck.deck for deck in decks_of_user]
+
+    context = {
+        'decks': decks
+    }
+
+    return render(request, 'decks.html', context)
 
 
 @login_required

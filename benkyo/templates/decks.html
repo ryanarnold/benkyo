@@ -28,27 +28,15 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Japanese Vocabulary</td>
-              <td>45 cards</td>
-              <td><a href="#" class="text-center text-primary">Review</a></td>
-              <td><a href="#" class="text-center text-warning">Edit</a></td>
-              <td><a href="#" class="text-center text-danger">Delete</a></td>
-            </tr>
-            <tr>
-              <td>Japanese Radicals</td>
-              <td>167 cards</td>
-              <td><a href="#" class="text-center text-primary">Review</a></td>
-              <td><a href="#" class="text-center text-warning">Edit</a></td>
-              <td><a href="#" class="text-center text-danger">Delete</a></td>
-            </tr>
-            <tr>
-              <td>Japanese Kanji</td>
-              <td>2,000 cards</td>
-              <td><a href="#" class="text-center text-primary">Review</a></td>
-              <td><a href="#" class="text-center text-warning">Edit</a></td>
-              <td><a href="#" class="text-center text-danger">Delete</a></td>
-            </tr>
+            {% for deck in decks %}
+              <tr>
+                <td>{{ deck.name }}</td>
+                <td>45 cards</td>
+                <td><a href="#" class="text-center text-primary">Review</a></td>
+                <td><a href="#" class="text-center text-warning">Edit</a></td>
+                <td><a href="#" class="text-center text-danger">Delete</a></td>
+              </tr>
+            {% endfor %}
           </tbody>
         </table>
 
