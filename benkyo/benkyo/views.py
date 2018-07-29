@@ -177,3 +177,21 @@ def cards_add(request, deck_id):
     }
 
     return render(request, 'cards_add.html', context)
+
+
+@login_required
+def cards_delete(request, deck_id, card_id):
+    deck = Deck.objects.get(deck_id=deck_id)
+    card = Card.objects.get(card_id=card_id)
+
+    if request.method == 'POST':
+        card.delete()
+
+        return HttpResponseRedirect(reverse('decks-edit', args=(deck_id,)))
+
+    context = {
+        'deck': deck,
+        'card': card
+    }
+
+    return render(request, 'cards_delete_confirm.html', context)
