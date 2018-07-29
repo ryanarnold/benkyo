@@ -10,7 +10,7 @@ from django.urls import reverse
 
 @login_required
 def index(request):
-    return render(request, 'index.html')
+    return HttpResponseRedirect(reverse('decks'))
 
 
 def login(request):
@@ -62,3 +62,8 @@ def create_user(request):
 
 def register_success(request):
     return render(request, 'register_successful.html')
+
+
+@login_required
+def decks(request):
+    return render(request, 'index.html')

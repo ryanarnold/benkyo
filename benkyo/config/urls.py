@@ -27,4 +27,6 @@ urlpatterns = [
     path('authenticate-user/', views.authenticate_user, name='authenticate-user'),
     path('create-user/', views.create_user, name='create-user'),
     path('register-success/', views.register_success, name='register-success'),
+
+    path('decks/', views.decks, name='decks'),
 ]
