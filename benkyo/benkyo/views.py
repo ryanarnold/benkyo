@@ -170,7 +170,7 @@ def cards_add(request, deck_id):
             'deck': deck
         }
 
-        return render(request, 'cards_add_successful.html', context)
+        return HttpResponseRedirect(reverse('decks-edit', args=(deck_id,)))
     
     context = {
         'deck': deck
