@@ -3,6 +3,7 @@
 {% block title %}Benkyo{% endblock %}
 
 {% block styles %}
+<link rel="stylesheet" href="{{ static('css/decks_create.css') }}" >
 {% endblock %}
 
 {% block content %}
@@ -13,6 +14,29 @@
       <div class="col-md-8">
 
         <h3>Create a Deck</h3>
+
+        <form action="{{ url('decks-create') }}" method="POST" id="form-deck">
+
+          <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+        
+          <div class="form-group">
+            <label for="input-deck-name">Deck name</label>
+            <input type="text" class="form-control" id="input-deck-name" name="name">
+          </div>
+
+          <div class="form-group">
+            <label for="input-deck-name">Is this deck private?</label>
+            <select class="form-control">
+              <option>Select...</option>
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn btn-outline-primary">Create</button>
+          <a class="btn btn-outline-secondary" href="{{ url('decks') }}" role="button">Cancel</a>
+
+        </form>
 
       </div>
       <div class="col-md-2"></div>
