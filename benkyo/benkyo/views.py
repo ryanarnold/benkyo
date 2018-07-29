@@ -154,6 +154,22 @@ def decks_edit(request, deck_id):
 def cards_add(request, deck_id):
     deck = Deck.objects.get(deck_id=deck_id)
 
+    if request.method == 'POST':
+        front = request.POST.get('front')
+        back = request.POST.get('back')
+
+        Card.objects.create(
+            deck=deck,
+            front=front,
+            back=back
+        )
+
+        context = {
+            'deck': deck
+        }
+
+        return render(request, 'cards_add_successful.html', context)
+
     context = {
         'deck': deck
     }

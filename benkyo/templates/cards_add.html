@@ -15,7 +15,7 @@
 
         <h3>Add a Card for Deck: {{ deck.name }}</h3>
 
-        <form action="{{ url('decks-create') }}" method="POST" id="form-card">
+        <form action="{{ url('cards-add', args=(deck.deck_id,)) }}" method="POST" id="form-card">
 
           <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
         
