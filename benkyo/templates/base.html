@@ -12,9 +12,24 @@
       {% block title %}{% endblock %}
     </title>
     
+    <link rel="stylesheet" href="{{ static('css/navbar.css') }}" >
     {% block styles %}{% endblock %}
   </head>
   <body>
+
+    {% block navbar %}
+      <div class="container-fluid benkyo-navbar">
+        <div class="row">
+          <div class="col-md-2"></div>
+          <div class="col-md-8">
+            <h1 class="display-4" id="benkyo-heading">Benkyo</h1>
+            <a href="{{ url('logout') }}" id="link-logout">Logout</a>
+          </div>
+          <div class="col-md-2"></div>
+        </div>
+      </div>
+    {% endblock %}
+
     
     {% block content %}{% endblock %}
 

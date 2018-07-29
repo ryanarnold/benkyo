@@ -1,0 +1,24 @@
+/* Primary Color: #6002ee (requires white foreground */
+/* Secondary Color: ##90ee02 */
+
+.benkyo-navbar {
+  background-color: #6002ee;
+}
+
+#benkyo-heading {
+  float: left;
+  color: white;
+}
+
+#link-logout {
+  float: right;
+  margin-top: 25px;
+}
+
+#link-logout:link {
+  color: white;
+}
+
+#link-logout:visited {
+  color: white;
+}
