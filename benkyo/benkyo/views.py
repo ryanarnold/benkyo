@@ -37,11 +37,11 @@ def logout(request):
     return HttpResponseRedirect(reverse('index'))
 
 
-def register(request, password_mismatch=False):
-    if password_mismatch:
-        return render(request, 'register.html', {'password_mismatch' : True})
+def register(request, password_mismatch='no'):
+    if password_mismatch == 'yes':
+        return render(request, 'register.html', {'password_mismatch' : 'yes'})
     else:
-        return render(request, 'register.html', {'password_mismatch' : False})
+        return render(request, 'register.html', {'password_mismatch' : 'no'})
 
 
 def create_user(request):
@@ -51,7 +51,7 @@ def create_user(request):
     password_confirm = request.POST.get('password-confirm')
 
     if password != password_confirm:
-        return HttpResponseRedirect(reverse('register', args=(True,)))
+        return HttpResponseRedirect(reverse('register', args=('yes',)))
 
     User.objects.create_user(
             username=username,

@@ -23,7 +23,7 @@
 
             <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
 
-            {% if password_mismatch %}
+            {% if password_mismatch == 'yes' %}
               <p class="text-danger">Passwords do not match!</p>
             {% endif %}
 
