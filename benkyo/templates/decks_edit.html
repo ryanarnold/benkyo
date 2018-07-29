@@ -64,7 +64,7 @@
             {% for card in cards %}
               <tr>
                 <td>1</td>
-                <td>{{ card.front }}く</td>
+                <td>{{ card.front }}</td>
                 <td>{{ card.back }}</td>
                 <td><a href="{{ url('cards-edit', args=(deck.deck_id, card.card_id)) }}" class="text-center text-warning">Edit</a></td>
                 <td><a href="{{ url('cards-delete', args=(deck.deck_id, card.card_id)) }}" class="text-center text-danger">Delete</a></td>
