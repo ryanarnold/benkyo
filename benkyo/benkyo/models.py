@@ -21,3 +21,18 @@ class DeckUser(Model):
 
     class Meta:
         unique_together = (('deck', 'user', 'role_cd'),)
+
+
+class Card(Model):
+    card_id = AutoField(primary_key=True)
+    deck = ForeignKey(Deck, on_delete=CASCADE)
+    front = CharField(max_length=100)
+    back = CharField(max_length=100)
+
+
+class CardTag(Model):
+    card = ForeignKey(Card, on_delete=CASCADE)
+    tag = CharField(max_length=100)
+
+    class Meta:
+        unique_together = (('card', 'tag'),)
