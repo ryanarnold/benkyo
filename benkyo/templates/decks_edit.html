@@ -67,7 +67,7 @@
                 <td>{{ card.front }}く</td>
                 <td>{{ card.back }}</td>
                 <td><a href="#" class="text-center text-warning">Edit</a></td>
-                <td><a href="#" class="text-center text-danger">Delete</a></td>
+                <td><a href="{{ url('cards-delete', args=(deck.deck_id, card.card_id)) }}" class="text-center text-danger">Delete</a></td>
               </tr>
             {% endfor %}
           </tbody>
