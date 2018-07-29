@@ -29,4 +29,5 @@ urlpatterns = [
     path('register-success/', views.register_success, name='register-success'),
 
     path('decks/', views.decks, name='decks'),
+    path('decks/create/', views.decks_create, name='decks-create'),
 ]
