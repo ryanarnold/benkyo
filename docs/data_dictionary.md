@@ -4,17 +4,13 @@
 
 - deck_id (pk)
 - name
-- visibility
+- private
 
 ### Deck_User
 
 - deck_id (pk)
 - user_id (pk)
 - role_cd
-
-### User_Role
-
-- role_cd (pk)
 
 ### Card
 
