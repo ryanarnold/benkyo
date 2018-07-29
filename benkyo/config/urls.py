@@ -37,4 +37,6 @@ urlpatterns = [
     path('decks/delete/successful/', views.decks_delete_successful, name='decks-delete-successful'),
 
     path('decks/<int:deck_id>/edit/', views.decks_edit, name='decks-edit'),
+
+    path('decks/<int:deck_id>/cards/add/', views.cards_add, name='cards-add'),
 ]

@@ -148,3 +148,14 @@ def decks_edit(request, deck_id):
     }
 
     return render(request, 'decks_edit.html', context)
+
+
+@login_required
+def cards_add(request, deck_id):
+    deck = Deck.objects.get(deck_id=deck_id)
+
+    context = {
+        'deck': deck
+    }
+
+    return render(request, 'cards_add.html', context)

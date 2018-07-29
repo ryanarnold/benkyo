@@ -47,7 +47,7 @@
         <h3>Deck Cards</h3>
         <br>
 
-        <a class="btn btn-primary" href="{{ url('decks-create') }}" role="button">Add a Card</a>
+        <a class="btn btn-primary" href="{{ url('cards-add', args=(deck.deck_id,)) }}" role="button">Add a Card</a>
         <br><br>
 
         <table class="table" id="decks">
