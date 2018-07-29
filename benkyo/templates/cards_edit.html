@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Benkyo{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ static('css/cards_add.css') }}" >
+{% endblock %}
+
+{% block content %}
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-2"></div>
+      <div class="col-md-8">
+
+        <h3>Edit Card</h3>
+
+        <form action="{{ url('cards-edit', args=(deck.deck_id, card.card_id)) }}" method="POST" id="form-card">
+
+          <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+        
+          <div class="form-group">
+            <label for="input-front">Front</label>
+            <input type="text" class="form-control" id="input-front" name="front" autocomplete="off" value="{{ card.front }}" required>
+          </div>
+
+          <div class="form-group">
+            <label for="input-back">Back</label>
+            <input type="text" class="form-control" id="input-back" name="back" autocomplete="off" value="{{ card.back }}" required>
+          </div>
+
+          <button type="submit" class="btn btn-outline-primary">Save</button>
+          <a class="btn btn-outline-secondary" href="{{ url('decks-edit', args=(deck.deck_id,)) }}" role="button">Cancel</a>
+
+        </form>
+
+      </div>
+      <div class="col-md-2"></div>
+    </div>
+  </div>
+
+{% endblock %}
