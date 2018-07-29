@@ -134,6 +134,7 @@ def decks_delete_successful(request):
 @login_required
 def decks_edit(request, deck_id):
     deck = Deck.objects.get(deck_id=deck_id)
+    cards = Card.objects.filter(deck=deck)
 
     if request.method == 'POST':
         name = request.POST.get('name')
@@ -144,7 +145,8 @@ def decks_edit(request, deck_id):
         deck.save()
 
     context = {
-        'deck': deck
+        'deck': deck,
+        'cards': cards
     }
 
     return render(request, 'decks_edit.html', context)
@@ -169,7 +171,7 @@ def cards_add(request, deck_id):
         }
 
         return render(request, 'cards_add_successful.html', context)
-
+    
     context = {
         'deck': deck
     }

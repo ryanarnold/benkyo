@@ -61,13 +61,15 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>1</td>
-              <td>行く</td>
-              <td>to go</td>
-              <td><a href="#" class="text-center text-warning">Edit</a></td>
-              <td><a href="#" class="text-center text-danger">Delete</a></td>
-            </tr>
+            {% for card in cards %}
+              <tr>
+                <td>1</td>
+                <td>{{ card.front }}く</td>
+                <td>{{ card.back }}</td>
+                <td><a href="#" class="text-center text-warning">Edit</a></td>
+                <td><a href="#" class="text-center text-danger">Delete</a></td>
+              </tr>
+            {% endfor %}
           </tbody>
         </table>
 
