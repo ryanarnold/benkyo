@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Benkyo{% endblock %}
+
+{% block content %}
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+          
+          <h3>Delete Deck</h3>
+
+          <p>Are you sure you want to delete the deck <b>{{ deck.name }}</b>?</p>
+
+          <a class="btn btn-outline-danger" href="{{ url('decks-delete', args=(deck.deck_id,)) }}" role="button">Delete</a>
+          <a class="btn btn-outline-secondary" href="{{ url('decks') }}" role="button">Cancel</a>
+
+        </div>
+        <div class="col-md-2"></div>
+      </div>
+    </div>
+
+{% endblock %}
