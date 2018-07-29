@@ -1,0 +1,12 @@
+#decks {
+  margin-top:25px;
+  width: 75%;
+}
+
+.width-small {
+  width: 10%;
+}
+
+#btn-create-deck {
+  margin-top: 25px;
+}

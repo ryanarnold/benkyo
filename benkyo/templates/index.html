@@ -2,6 +2,10 @@
 
 {% block title %}Benkyo{% endblock %}
 
+{% block styles %}
+  <link rel="stylesheet" href="{{ static('css/index.css') }}" >
+{% endblock %}
+
 {% block content %}
 
   <div class="container-fluid">
@@ -9,7 +13,40 @@
       <div class="col-md-2"></div>
       <div class="col-md-8">
 
-        <h3>Your Decks</h3>        
+        <h3>Your Decks</h3>
+
+        <a class="btn btn-primary" href="#" role="button" id="btn-create-deck">Create a Deck</a>
+
+        <table class="table" id="decks">
+          <thead>
+            <tr>
+              <th>Deck Name</th>
+              <th class="width-small"></th>
+              <th class="width-small"></th>
+              <th class="width-small"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Japanese Vocabulary</td>
+              <td><a href="#" class="text-center text-primary">Review</a></td>
+              <td><a href="#" class="text-center text-warning">Edit</a></td>
+              <td><a href="#" class="text-center text-danger">Delete</a></td>
+            </tr>
+            <tr>
+              <td>Japanese Radicals</td>
+              <td><a href="#" class="text-center text-primary">Review</a></td>
+              <td><a href="#" class="text-center text-warning">Edit</a></td>
+              <td><a href="#" class="text-center text-danger">Delete</a></td>
+            </tr>
+            <tr>
+              <td>Japanese Kanji</td>
+              <td><a href="#" class="text-center text-primary">Review</a></td>
+              <td><a href="#" class="text-center text-warning">Edit</a></td>
+              <td><a href="#" class="text-center text-danger">Delete</a></td>
+            </tr>
+          </tbody>
+        </table>
 
       </div>
       <div class="col-md-2"></div>
