@@ -102,3 +102,26 @@ def decks_create(request):
 @login_required
 def decks_create_successful(request):
     return render(request, 'decks_create_successful.html')
+
+
+@login_required
+def decks_delete_confirm(request, deck_id):
+    context = {
+        'deck': Deck.objects.get(deck_id=deck_id)
+    }
+
+    return render(request, 'decks_delete_confirm.html', context)
+
+
+@login_required
+def decks_delete(request, deck_id):
+    deck = Deck.objects.get(deck_id=deck_id)
+    DeckUser.objects.get(deck=deck).delete()
+    deck.delete()    
+
+    return HttpResponseRedirect(reverse('decks-delete-successful'))
+
+
+@login_required
+def decks_delete_successful(request):
+    return render(request, 'decks_delete_successful.html')
