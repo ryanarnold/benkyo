@@ -8,7 +8,7 @@ Provide a robust and flexible SRS application suited for a variety of learning g
 
 1. *DONE* Users should be able to sign-up and login.
 
-2. Users should be able to upload an excel file containing the material to learn.
+2. *DONE* Users should be able to upload an excel file containing the material to learn.
 
 3. The structure of the excel file is not important and the user must be able to manipulate which
 columns will be shown in the front and which will be shown in the back.
