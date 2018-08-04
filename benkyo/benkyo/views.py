@@ -198,12 +198,23 @@ def cards_edit(request, deck_id, card_id):
 
         card.save()
 
+        tags = [tag.strip() for tag in request.POST.get('tags').split(',')]
+        
+        for tag in tags:
+            card_tag = CardTag.objects.filter(card=card, tag=tag)
+            
+            if not card_tag:
+                CardTag.objects.create(
+                    card=card,
+                    tag=tag
+                )
+
         return HttpResponseRedirect(reverse('decks-edit', args=(deck_id,)))
-    
+
     context = {
         'deck': deck,
         'card': card,
-        'tags': tags
+        'tags_string': ','.join([tag.tag for tag in tags])
     }
 
     return render(request, 'cards_edit.html', context)
