@@ -6,6 +6,8 @@ from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from django.conf import settings
+from django.core.files.storage import FileSystemStorage
 
 from .models import Deck, DeckUser, Card, CardTag
 
@@ -235,3 +237,24 @@ def cards_delete(request, deck_id, card_id):
     }
 
     return render(request, 'cards_delete_confirm.html', context)
+
+
+@login_required
+def cards_import(request, deck_id):
+    deck = Deck.objects.get(deck_id=deck_id)
+
+    if request.method == 'POST':
+        upload_file = request.FILES['upload_file']
+        fs = FileSystemStorage()
+        filename = fs.save(upload_file.name, upload_file)
+        uploaded_file_url = fs.url(filename)
+
+        deck.import_cards_from_file(filename)
+        
+        return HttpResponseRedirect(reverse('decks-edit', args=(deck_id,)))
+
+    context = {
+        'deck': deck,
+    }
+
+    return render(request, 'cards_import.html', context)
