@@ -160,15 +160,19 @@ def cards_add(request, deck_id):
         front = request.POST.get('front')
         back = request.POST.get('back')
 
-        Card.objects.create(
+        card = Card.objects.create(
             deck=deck,
             front=front,
             back=back
         )
 
-        context = {
-            'deck': deck
-        }
+        tags = [tag.strip() for tag in request.POST.get('tags').split(',')]
+        
+        for tag in tags:
+            CardTag.objects.create(
+                card=card,
+                tag=tag
+            )
 
         return HttpResponseRedirect(reverse('decks-edit', args=(deck_id,)))
     
