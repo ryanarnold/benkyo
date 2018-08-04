@@ -148,7 +148,8 @@ def decks_edit(request, deck_id):
 
     context = {
         'deck': deck,
-        'cards': cards
+        'cards': cards,
+        'first_card': cards[0]
     }
 
     return render(request, 'decks_edit.html', context)
