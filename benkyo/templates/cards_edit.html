@@ -29,6 +29,26 @@
             <input type="text" class="form-control" id="input-back" name="back" autocomplete="off" value="{{ card.back }}" required>
           </div>
 
+          <div class="form-group">
+            <label for="input-tags">Tags</label>
+            <ul class="list-group">
+              {% for tag in tags %}
+                <li class="list-group-item">{{ tag.tag }}</li>
+              {% else %}
+                <p class="text-danger">None</p>
+              {% endfor %}
+            </ul>
+          </div>
+
+          <div class="form-group">
+            <div class="input-group">
+              <input type="text" class="form-control">
+              <div class="input-group-append">
+                <button class="btn btn-primary" type="button">Add Tag</button>
+              </div>
+            </div>
+          </div>
+
           <button type="submit" class="btn btn-outline-primary">Save</button>
           <a class="btn btn-outline-secondary" href="{{ url('decks-edit', args=(deck.deck_id,)) }}" role="button">Cancel</a>
 

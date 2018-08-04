@@ -7,7 +7,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import Deck, DeckUser, Card
+from .models import Deck, DeckUser, Card, CardTag
 
 
 @login_required
@@ -183,6 +183,7 @@ def cards_add(request, deck_id):
 def cards_edit(request, deck_id, card_id):
     deck = Deck.objects.get(deck_id=deck_id)
     card = Card.objects.get(card_id=card_id)
+    tags = CardTag.objects.filter(card=card)
 
     if request.method == 'POST':
         front = request.POST.get('front')
@@ -197,7 +198,8 @@ def cards_edit(request, deck_id, card_id):
     
     context = {
         'deck': deck,
-        'card': card
+        'card': card,
+        'tags': tags
     }
 
     return render(request, 'cards_edit.html', context)
