@@ -240,6 +240,22 @@ def cards_delete(request, deck_id, card_id):
 
 
 @login_required
+def cards_delete_all(request, deck_id):
+    deck = Deck.objects.get(deck_id=deck_id)
+
+    if request.method == 'POST':
+        cards = Card.objects.filter(deck=deck)
+        cards.delete()
+
+        return HttpResponseRedirect(reverse('decks-edit', args=(deck_id,)))
+
+    context = {
+        'deck': deck
+    }
+    
+    return render(request, 'cards_delete_all.html', context)
+
+@login_required
 def cards_import(request, deck_id):
     deck = Deck.objects.get(deck_id=deck_id)
 

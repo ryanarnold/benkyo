@@ -49,6 +49,7 @@
 
         <a class="btn btn-primary" href="{{ url('cards-add', args=(deck.deck_id,)) }}" role="button">Add a Card</a>
         <a class="btn btn-primary" href="{{ url('cards-import', args=(deck.deck_id,)) }}" role="button">Import Cards</a>
+        <a class="btn btn-outline-danger" href="{{ url('cards-delete-all', args=(deck.deck_id,)) }}" role="button">Delete All</a>
         <br><br>
 
         <table class="table" id="decks">
