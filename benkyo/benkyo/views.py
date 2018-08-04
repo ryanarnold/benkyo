@@ -198,16 +198,15 @@ def cards_edit(request, deck_id, card_id):
 
         card.save()
 
+        # Reset all tags for the card
+        CardTag.objects.filter(card=card).delete()
+
         tags = [tag.strip() for tag in request.POST.get('tags').split(',')]
-        
         for tag in tags:
-            card_tag = CardTag.objects.filter(card=card, tag=tag)
-            
-            if not card_tag:
-                CardTag.objects.create(
-                    card=card,
-                    tag=tag
-                )
+            CardTag.objects.create(
+                card=   card,
+                tag=tag
+            )
 
         return HttpResponseRedirect(reverse('decks-edit', args=(deck_id,)))
 
