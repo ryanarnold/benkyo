@@ -39,6 +39,6 @@ urlpatterns = [
     path('decks/<int:deck_id>/edit/', views.decks_edit, name='decks-edit'),
 
     path('decks/<int:deck_id>/cards/add/', views.cards_add, name='cards-add'),
-    path('decks/<int:deck_id>/cards//<int:card_id>/edit/', views.cards_edit, name='cards-edit'),
+    path('decks/<int:deck_id>/cards/<int:card_id>/edit/', views.cards_edit, name='cards-edit'),
     path('decks/<int:deck_id>/cards/<int:card_id>/delete/', views.cards_delete, name='cards-delete'),
 ]
