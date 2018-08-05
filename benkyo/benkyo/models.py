@@ -3,7 +3,7 @@ from os import path
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.db.models import (CASCADE, AutoField, BooleanField, CharField,
-                              ForeignKey, Model)
+                              ForeignKey, Model, DateField)
 from openpyxl import load_workbook
 
 
@@ -80,3 +80,16 @@ class CardTag(Model):
                 card=card,
                 tag=tag
             )
+
+
+class Review(Model):
+    status = (
+        ('EASY', 'EASY'),
+        ('MODERATE', 'MODERATE'),
+        ('HARD', 'HARD')
+    )
+
+    card = ForeignKey(Card, on_delete=CASCADE)
+    user = ForeignKey(User, on_delete=CASCADE)
+    status_cd = CharField(max_length=50, choices=status)
+    date_to_review = DateField()
