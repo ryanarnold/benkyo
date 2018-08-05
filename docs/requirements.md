@@ -22,6 +22,10 @@ columns will be shown in the front and which will be shown in the back.
 7. Each review of a flashcard is timed, and the time-to-answer will affect the date at which the
 flashcard will be reviewed again.
 
+    < 7 secs = EASY =  7 days
+    < 10 secs = MODERATE = 3 days
+    > 10 secs = HARD = 1 day
+
 8. Users should be able to choose which cards to review based on tags.
 
 9. Users should be able to choose how they will answer the flashcard (multiple choice or by typing)

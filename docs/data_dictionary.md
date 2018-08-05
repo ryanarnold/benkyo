@@ -28,10 +28,5 @@
 
 - card_id (pk)
 - user_id (pk)
-- status_id
+- status_cd
 - date_to_review
-
-### Status
-
-- status_id (pk)
-- days_before_review
