@@ -42,4 +42,5 @@ urlpatterns = [
     path('decks/<int:deck_id>/cards/import/', views.cards_import, name='cards-import'),
 
     path('decks/<int:deck_id>/review/start/', views.review_start, name='review-start'),
+    path('decks/<int:deck_id>/review/', views.review, name='review'),
 ]
