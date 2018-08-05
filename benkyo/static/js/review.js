@@ -5,13 +5,35 @@ function updateQuestion() {
     $('#question').html(reviewItems[currentIndex].question);
 }
 
+function finishReview() {
+    var currentPath = window.location.pathname;
+
+    $.ajax({
+        url: currentPath + 'assessment/',
+        dataType: 'json',
+        data: {
+            reviewItems: JSON.stringify(reviewItems)
+        },
+        success: function(result) {
+            // window.location.href = "/decks/";
+        },
+        error: function(xhr, status, error) {
+          alert(error);
+        }
+    });
+}
+
 function checkAnswer() {
     var answer = $('#input-answer').val();
     var correctAnswer = reviewItems[currentIndex].answer;
 
     if (answer == correctAnswer) {
+        reviewItems[currentIndex].correct = true;
+        reviewItems[currentIndex].timeToAnswer = 1;
         alert('CORRECT!');
     } else {
+        reviewItems[currentIndex].correct = false;
+        reviewItems[currentIndex].timeToAnswer = 100;
         alert('WRONG!');
     }
 
@@ -21,6 +43,7 @@ function checkAnswer() {
         updateQuestion();
         $('#input-answer').val('');
     } else {
+        finishReview();
     }
 }
 
