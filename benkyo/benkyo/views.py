@@ -138,7 +138,6 @@ def decks_delete_confirm(request, deck_id):
 @login_required
 def decks_delete(request, deck_id):
     deck = Deck.objects.get(deck_id=deck_id)
-    DeckUser.objects.get(deck=deck).delete()
     deck.delete()    
 
     return HttpResponseRedirect(reverse(DECKS_URL))
