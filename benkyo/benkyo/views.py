@@ -122,12 +122,7 @@ def decks_delete(request, deck_id):
     DeckUser.objects.get(deck=deck).delete()
     deck.delete()    
 
-    return HttpResponseRedirect(reverse('decks-delete-successful'))
-
-
-@login_required
-def decks_delete_successful(request):
-    return render(request, 'decks_delete_successful.html')
+    return HttpResponseRedirect(reverse('decks'))
 
 
 @login_required
