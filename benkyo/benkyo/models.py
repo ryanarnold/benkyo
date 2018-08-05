@@ -93,3 +93,6 @@ class Review(Model):
     user = ForeignKey(User, on_delete=CASCADE)
     status_cd = CharField(max_length=50, choices=status)
     date_to_review = DateField()
+
+    class Meta:
+        unique_together = (('card', 'user'),)
