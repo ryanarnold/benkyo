@@ -13,12 +13,8 @@
       <div class="col-md-4"></div>
       <div class="col-md-4">
 
-        <form action="{{ url('review', args=(deck.deck_id,)) }}" method="POST" id="form-review">
-
-          <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-
           <br><br>
-          <h1 class="text-center display-4">恋</h1>
+          <h1 class="text-center display-4" id="question">恋</h1>
           <br>
         
           <div class="form-group">
@@ -27,16 +23,21 @@
           </div>
 
           <div class="buttons">
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button class="btn btn-primary" id="btn-submit">Submit</button>
             <br>
             <a class="btn btn-link" href="{{ url('decks') }}" role="button">Cancel</a>
           </div>
-
-        </form>
 
       </div>
       <div class="col-md-4"></div>
     </div>
   </div>
 
+{% endblock %}
+
+{% block scripts %}
+  <script>
+    var reviewItems = {{ review_items|safe  }};
+  </script>
+  <script src="{{ static('js/review.js') }}"></script>
 {% endblock %}

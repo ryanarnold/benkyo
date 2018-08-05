@@ -1,3 +1,5 @@
+from random import shuffle
+
 from django.conf import settings
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as login_user
@@ -282,9 +284,13 @@ def review_start(request, deck_id):
 @login_required
 def review(request, deck_id):
     deck = Deck.objects.get(deck_id=deck_id)
+    cards = Card.objects.filter(deck=deck)
+    review_items = [{'question': card.front, 'answer': card.back} for card in cards]
+    shuffle(review_items)
 
     context = {
         'deck': deck,
+        'review_items': review_items
     }
 
     return render(request, REVIEW_HTML, context)
