@@ -326,8 +326,18 @@ def review_assessment(request, deck_id):
     review_items = json.loads(request.GET.get('reviewItems'))
 
     for item in review_items:
-        status_cd = 'EASY' if item['timeToAnswer'] == 1 else 'HARD'
-        days_to_add = 7 if status_cd == 'EASY' else 1
+        time_to_answer = item['timeToAnswer']
+
+        if time_to_answer < 7:
+            status_cd = 'EASY'
+            days_to_add = 7
+        elif time_to_answer < 10:
+            status_cd = 'MODERATE'
+            days_to_add = 3
+        else:
+            status_cd = 'HARD'
+            days_to_add = 1
+
         date_to_review = datetime.datetime.today() + datetime.timedelta(days=days_to_add)
 
         review = Review.objects.filter(card_id=item['cardId'], user=request.user)

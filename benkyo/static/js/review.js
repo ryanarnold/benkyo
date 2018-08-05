@@ -1,7 +1,9 @@
 
 var currentIndex = 0;
+var secondsElapsed = 0;
 
 function updateQuestion() {
+    secondsElapsed = 0;
     $('#question').html(reviewItems[currentIndex].question);
 }
 
@@ -29,11 +31,11 @@ function checkAnswer() {
 
     if (answer == correctAnswer) {
         reviewItems[currentIndex].correct = true;
-        reviewItems[currentIndex].timeToAnswer = 1;
+        reviewItems[currentIndex].timeToAnswer = secondsElapsed;
         alert('CORRECT!');
     } else {
         reviewItems[currentIndex].correct = false;
-        reviewItems[currentIndex].timeToAnswer = 100;
+        reviewItems[currentIndex].timeToAnswer = secondsElapsed;
         alert('WRONG!');
     }
 
@@ -54,3 +56,11 @@ $('#input-answer').keyup(function (event) {
     }
 });
 updateQuestion();
+
+function updateTimer() {
+    secondsElapsed += 1;
+    $('#time-elapsed').text(secondsElapsed + ' secs');
+}
+
+updateTimer();
+setInterval(updateTimer, 1000);
