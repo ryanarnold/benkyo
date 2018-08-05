@@ -36,29 +36,34 @@ def logout(request):
     return HttpResponseRedirect(reverse('index'))
 
 
-def register(request, password_mismatch='no'):
-    if password_mismatch == 'yes':
-        return render(request, 'register.html', {'password_mismatch' : 'yes'})
-    else:
-        return render(request, 'register.html', {'password_mismatch' : 'no'})
+def register(request):
+    email = ''
+    username = ''
+    password_mismatch = False
 
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        password_confirm = request.POST.get('password-confirm')
 
-def create_user(request):
-    email = request.POST.get('email')
-    username = request.POST.get('username')
-    password = request.POST.get('password')
-    password_confirm = request.POST.get('password-confirm')
+        if password == password_confirm:
+            User.objects.create_user(
+                username=username,
+                password=password,
+                email=email
+            )
+            return HttpResponseRedirect(reverse('register-success'))
+        else:
+            password_mismatch = True
+    
+    context = {
+        'email': email,
+        'username': username,
+        'password_mismatch': password_mismatch
+    }
 
-    if password != password_confirm:
-        return HttpResponseRedirect(reverse('register', args=('yes',)))
-
-    User.objects.create_user(
-            username=username,
-            password=password,
-            email=email
-        )
-
-    return HttpResponseRedirect(reverse('register-success'))
+    return render(request, 'register.html', context)
 
 
 def register_success(request):
