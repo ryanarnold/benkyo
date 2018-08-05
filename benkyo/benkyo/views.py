@@ -1,4 +1,6 @@
 from random import shuffle
+import json
+import datetime
 
 from django.conf import settings
 from django.contrib.auth import authenticate
@@ -7,11 +9,11 @@ from django.contrib.auth import logout as logout_user
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.files.storage import FileSystemStorage
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import Card, CardTag, Deck, DeckUser
+from .models import Card, CardTag, Deck, DeckUser, Review
 from .util import split_comma_separated_into_list
 
 HTTP_POST = 'POST'
@@ -20,6 +22,7 @@ INDEX_URL = 'index'
 REGISTER_SUCCESS_URL = 'register-success'
 DECKS_URL = 'decks'
 DECKS_EDIT_URL = 'decks-edit'
+REVIEW_END_URL = 'review-end'
 
 CARDS_ADD_HTML = 'cards_add.html'
 CARDS_DELETE_ALL_HTML = 'cards_delete_all.html'
@@ -35,6 +38,7 @@ REGISTER_HTML = 'register.html'
 REGISTER_SUCCESSFUL_HTML = 'register_successful.html'
 REVIEW_START_HTML = 'review_start.html'
 REVIEW_HTML = 'review.html'
+REVIEW_END_HTML = 'review_end.html'
 
 @login_required
 def index(request):
@@ -284,9 +288,30 @@ def review_start(request, deck_id):
 @login_required
 def review(request, deck_id):
     deck = Deck.objects.get(deck_id=deck_id)
+
     cards = Card.objects.filter(deck=deck)
-    review_items = [{'question': card.front, 'answer': card.back} for card in cards]
-    shuffle(review_items)
+    review_items = []
+
+    for card in cards:
+        review = Review.objects.filter(card=card, user=request.user)
+        if review.exists():
+            review = review[0]
+
+            if datetime.datetime.today().date() >= review.date_to_review:
+                review_items.append({
+                    'cardId': card.card_id,
+                    'question': card.front,
+                    'answer': card.back
+                })
+        else:
+            review_items.append({
+                'cardId': card.card_id,
+                'question': card.front,
+                'answer': card.back
+            })
+    
+    if len(review_items) == 0:
+        return HttpResponseRedirect(reverse(REVIEW_END_URL, args=(deck_id,)))
 
     context = {
         'deck': deck,
@@ -294,3 +319,35 @@ def review(request, deck_id):
     }
 
     return render(request, REVIEW_HTML, context)
+
+
+@login_required
+def review_assessment(request, deck_id):
+    review_items = json.loads(request.GET.get('reviewItems'))
+
+    for item in review_items:
+        status_cd = 'EASY' if item['timeToAnswer'] == 1 else 'HARD'
+        days_to_add = 7 if status_cd == 'EASY' else 1
+        date_to_review = datetime.datetime.today() + datetime.timedelta(days=days_to_add)
+
+        review = Review.objects.filter(card_id=item['cardId'], user=request.user)
+
+        if review:
+            review = review[0]
+            review.status_cd = status_cd
+            review.date_to_review = date_to_review
+            review.save()
+        else:
+            Review.objects.create(
+                card=Card.objects.get(card_id=item['cardId']),
+                user=request.user,
+                status_cd=status_cd,
+                date_to_review=date_to_review
+            )
+    
+    return JsonResponse({'hello': True})
+
+
+@login_required
+def review_end(request, deck_id):
+    return render(request, REVIEW_END_HTML)
