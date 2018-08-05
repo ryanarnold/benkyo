@@ -31,6 +31,7 @@ DECKS_EDIT_HTML = 'decks_edit.html'
 LOGIN_HTML = 'login.html'
 REGISTER_HTML = 'register.html'
 REGISTER_SUCCESSFUL_HTML = 'register_successful.html'
+REVIEW_START_HTML = 'review_start.html'
 
 @login_required
 def index(request):
@@ -264,3 +265,14 @@ def cards_import(request, deck_id):
     }
 
     return render(request, CARDS_IMPORT_HTML, context)
+
+
+@login_required
+def review_start(request, deck_id):
+    deck = Deck.objects.get(deck_id=deck_id)
+
+    context = {
+        'deck': deck,
+    }
+
+    return render(request, REVIEW_START_HTML, context)

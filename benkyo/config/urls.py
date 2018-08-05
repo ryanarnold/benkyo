@@ -40,4 +40,6 @@ urlpatterns = [
     path('decks/<int:deck_id>/cards/delete/all/', views.cards_delete_all, name='cards-delete-all'),
 
     path('decks/<int:deck_id>/cards/import/', views.cards_import, name='cards-import'),
+
+    path('decks/<int:deck_id>/review/start/', views.review_start, name='review-start'),
 ]

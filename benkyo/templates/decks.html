@@ -36,7 +36,7 @@
                 {% else %}
                   <td>{{ deck.card_count }} card</td>
                 {% endif %}
-                <td><a href="#" class="text-center text-primary">Review</a></td>
+                <td><a href="{{ url('review-start', args=(deck.deck_id,)) }}" class="text-center text-primary">Review</a></td>
                 <td><a href="{{ url('decks-edit', args=(deck.deck_id,)) }}" class="text-center text-warning">Edit</a></td>
                 <td><a href="{{ url('decks-delete-confirm', args=(deck.deck_id,)) }}" class="text-center text-danger">Delete</a></td>
               </tr>
