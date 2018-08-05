@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Benkyo{% endblock %}
+
+{% block styles %}
+  <link rel="stylesheet" href="{{ static('css/review.css') }}" >
+{% endblock %}
+
+{% block content %}
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-4"></div>
+      <div class="col-md-4">
+
+        <form action="{{ url('review', args=(deck.deck_id,)) }}" method="POST" id="form-review">
+
+          <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+
+          <br><br>
+          <h1 class="text-center display-4">恋</h1>
+          <br>
+        
+          <div class="form-group">
+            <label for="input-answer" hidden>Answer</label>
+            <input type="text" class="form-control" id="input-answer" name="answer" autocomplete="off" required autofocus>
+          </div>
+
+          <div class="buttons">
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <br>
+            <a class="btn btn-link" href="{{ url('decks') }}" role="button">Cancel</a>
+          </div>
+
+        </form>
+
+      </div>
+      <div class="col-md-4"></div>
+    </div>
+  </div>
+
+{% endblock %}
