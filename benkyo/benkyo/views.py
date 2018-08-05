@@ -1,15 +1,15 @@
+from django.conf import settings
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as login_user
 from django.contrib.auth import logout as logout_user
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-from django.conf import settings
-from django.core.files.storage import FileSystemStorage
 
-from .models import Deck, DeckUser, Card, CardTag
+from .models import Card, CardTag, Deck, DeckUser
 
 
 @login_required

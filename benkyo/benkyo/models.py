@@ -1,10 +1,10 @@
+from os import path
+
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.db.models import (CASCADE, AutoField, BooleanField, CharField,
                               ForeignKey, Model)
-from django.conf import settings
-from os import path
 from openpyxl import load_workbook
-
 
 
 class Deck(Model):
