@@ -102,14 +102,9 @@ def decks_create(request):
             role_cd='O'
         )
 
-        return HttpResponseRedirect(reverse('decks-create-successful'))
+        return HttpResponseRedirect(reverse('decks'))
 
     return render(request, 'decks_create.html')
-
-
-@login_required
-def decks_create_successful(request):
-    return render(request, 'decks_create_successful.html')
 
 
 @login_required

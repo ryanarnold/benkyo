@@ -28,7 +28,6 @@ urlpatterns = [
 
     path('decks/', views.decks, name='decks'),
     path('decks/create/', views.decks_create, name='decks-create'),
-    path('decks/create/successful/', views.decks_create_successful, name='decks-create-successful'),
     
     path('decks/<int:deck_id>/delete/confirm/', views.decks_delete_confirm, name='decks-delete-confirm'),
     path('decks/<int:deck_id>/delete/', views.decks_delete, name='decks-delete'),
