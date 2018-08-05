@@ -15,7 +15,7 @@ function finishReview() {
             reviewItems: JSON.stringify(reviewItems)
         },
         success: function(result) {
-            // window.location.href = "/decks/";
+            window.location.href = currentPath + 'end/';
         },
         error: function(xhr, status, error) {
           alert(error);

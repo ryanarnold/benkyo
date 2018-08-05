@@ -43,4 +43,6 @@ urlpatterns = [
 
     path('decks/<int:deck_id>/review/start/', views.review_start, name='review-start'),
     path('decks/<int:deck_id>/review/', views.review, name='review'),
+    path('decks/<int:deck_id>/review/assessment/', views.review_assessment, name='review-assessment'),
+    path('decks/<int:deck_id>/review/end/', views.review_end, name='review-end'),
 ]
