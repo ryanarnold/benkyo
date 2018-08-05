@@ -61,6 +61,11 @@ class Card(Model):
     front = CharField(max_length=100)
     back = CharField(max_length=100)
 
+    def update(self, front, back):
+        self.front = front
+        self.back = back
+        self.save()
+
 
 class CardTag(Model):
     card = ForeignKey(Card, on_delete=CASCADE)
@@ -68,3 +73,10 @@ class CardTag(Model):
 
     class Meta:
         unique_together = (('card', 'tag'),)
+
+    def create_from_list(card, tag_list):
+        for tag in tag_list:
+            CardTag.objects.create(
+                card=card,
+                tag=tag
+            )

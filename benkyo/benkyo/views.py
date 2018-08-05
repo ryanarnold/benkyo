@@ -10,6 +10,7 @@ from django.shortcuts import render
 from django.urls import reverse
 
 from .models import Card, CardTag, Deck, DeckUser
+from .util import split_comma_separated_into_list
 
 HTTP_POST = 'POST'
 
@@ -91,8 +92,7 @@ def register_success(request):
 
 @login_required
 def decks(request):
-    decks_of_user = DeckUser.objects.filter(user=request.user)
-    decks = [deck.deck for deck in decks_of_user]
+    decks = [deck.deck for deck in DeckUser.objects.filter(user=request.user)]
 
     for deck in decks:
         deck.card_count = Card.objects.filter(deck=deck).count()
@@ -137,9 +137,7 @@ def decks_delete_confirm(request, deck_id):
 
 @login_required
 def decks_delete(request, deck_id):
-    deck = Deck.objects.get(deck_id=deck_id)
-    deck.delete()    
-
+    Deck.objects.get(deck_id=deck_id).delete()
     return HttpResponseRedirect(reverse(DECKS_URL))
 
 
@@ -149,11 +147,8 @@ def decks_edit(request, deck_id):
     cards = Card.objects.filter(deck=deck)
 
     if request.method == HTTP_POST:
-        name = request.POST.get('name')
-        private = True if request.POST.get('private') == 'yes' else False
-
-        deck.name = name
-        deck.private = private
+        deck.name = request.POST.get('name')
+        deck.private = True if request.POST.get('private') == 'yes' else False
         deck.save()
 
     context = {
@@ -170,22 +165,14 @@ def cards_add(request, deck_id):
     deck = Deck.objects.get(deck_id=deck_id)
 
     if request.method == HTTP_POST:
-        front = request.POST.get('front')
-        back = request.POST.get('back')
-
         card = Card.objects.create(
             deck=deck,
-            front=front,
-            back=back
+            front=request.POST.get('front'),
+            back=request.POST.get('back')
         )
 
-        tags = [tag.strip() for tag in request.POST.get('tags').split(',')]
-        
-        for tag in tags:
-            CardTag.objects.create(
-                card=card,
-                tag=tag
-            )
+        tags = split_comma_separated_into_list(request.POST.get('tags'))
+        CardTag.create_from_list(card, tags)
 
         return HttpResponseRedirect(reverse(DECKS_EDIT_URL, args=(deck_id,)))
     
@@ -203,23 +190,16 @@ def cards_edit(request, deck_id, card_id):
     tags = CardTag.objects.filter(card=card)
 
     if request.method == HTTP_POST:
-        front = request.POST.get('front')
-        back = request.POST.get('back')
-
-        card.front = front
-        card.back = back
-
-        card.save()
+        card.update(
+            front=request.POST.get('front'),
+            back=request.POST.get('back')
+        )
 
         # Reset all tags for the card
         CardTag.objects.filter(card=card).delete()
 
-        tags = [tag.strip() for tag in request.POST.get('tags').split(',')]
-        for tag in tags:
-            CardTag.objects.create(
-                card=   card,
-                tag=tag
-            )
+        tags = split_comma_separated_into_list(request.POST.get('tags'))
+        CardTag.create_from_list(card, tags)
 
         return HttpResponseRedirect(reverse(DECKS_EDIT_URL, args=(deck_id,)))
 
@@ -239,7 +219,6 @@ def cards_delete(request, deck_id, card_id):
 
     if request.method == HTTP_POST:
         card.delete()
-
         return HttpResponseRedirect(reverse(DECKS_EDIT_URL, args=(deck_id,)))
 
     context = {
