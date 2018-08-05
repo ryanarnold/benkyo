@@ -19,7 +19,7 @@ columns will be shown in the front and which will be shown in the back.
 
 6. *DONE* Each flashcard can have tags added to them.
 
-7. Each review of a flashcard is timed, and the time-to-answer will affect the date at which the
+7. *DONE* Each review of a flashcard is timed, and the time-to-answer will affect the date at which the
 flashcard will be reviewed again.
 
     < 7 secs = EASY =  7 days
@@ -33,3 +33,9 @@ flashcard will be reviewed again.
 10. Users should be able to choose which side of the card will be the question.
 
 11. After each review, statistics will be shown regarding how well the user did.
+
+12. Users should be able to choose the number of cards to review.
+
+13. Users should be able to choose whether the cards should be shuffled.
+
+14. Stats should be shown after reviewing.
