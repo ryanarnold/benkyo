@@ -18,20 +18,17 @@ def index(request):
 
 
 def login(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(username=username, password=password)
+
+        if user:
+            login_user(request, user)
+            return HttpResponseRedirect(reverse('index'))
+
     return render(request, 'login.html')
-
-
-def authenticate_user(request):
-    username = request.POST.get('username')
-    password = request.POST.get('password')
-
-    user = authenticate(username=username, password=password)
-
-    if user:
-        login_user(request, user)
-        return HttpResponseRedirect(reverse('index'))
-    else:
-        return HttpResponseRedirect(reverse('login'))
 
 
 def logout(request):

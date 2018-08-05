@@ -19,7 +19,7 @@
           <h1>Login</h1>
           <br>
 
-          <form action="{{ url('authenticate-user') }}" method="POST">
+          <form action="{{ url('login') }}" method="POST">
 
             <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
           
