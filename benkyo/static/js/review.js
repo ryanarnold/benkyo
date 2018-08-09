@@ -5,16 +5,7 @@ function updateQuestion() {
     $('#question').html(reviewItems[currentIndex].question);
 }
 
-function checkAnswer() {
-    var answer = $('#input-answer').val();
-    var correctAnswer = reviewItems[currentIndex].answer;
-
-    if (answer == correctAnswer) {
-        alert('CORRECT!');
-    } else {
-        alert('WRONG!');
-    }
-
+function nextQuestion() {
     currentIndex += 1;
 
     if (currentIndex < reviewItems.length) {
@@ -22,6 +13,21 @@ function checkAnswer() {
         $('#input-answer').val('');
     } else {
     }
+}
+
+function checkAnswer() {
+    var answer = $('#input-answer').val();
+    var correctAnswer = reviewItems[currentIndex].answer;
+
+    if (answer == correctAnswer) {
+        $('#question').addClass('animated bounce faster');
+        // alert('CORRECT!');
+    } else {
+        $('#question').addClass('animated shake faster');
+        // alert('WRONG!');
+    }
+
+    setTimeout(nextQuestion, 1000);
 }
 
 $('#btn-submit').mouseup(checkAnswer);
