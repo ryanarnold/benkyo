@@ -38,6 +38,7 @@ function nextQuestion() {
         updateQuestion();
         $inputAnswer.val('');
     } else {
+        finishReview();
     }
 }
 
@@ -50,6 +51,8 @@ function checkAnswer() {
     } else {
         $question.addClass('animated shake faster');
     }
+
+    reviewItems[currentIndex].timeToAnswer = secondsElapsed;
 
     setTimeout(nextQuestion, 1000);
 }
