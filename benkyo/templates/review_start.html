@@ -39,6 +39,17 @@
                   <label class="form-check-label" for="{{ tag }}">{{ tag }}</label>
                 </div>
               {% endfor %}
+            
+            <label for="input-question-side">Question Side</label>
+            <select name="question_side" id="input-question" class="form-control">
+              {% if question_side == 'FRONT' %}
+                <option value="FRONT" selected>Front</option>
+                <option value="BACK">Back</option>
+              {% else %}
+                <option value="FRONT">Front</option>
+                <option value="BACK" selected>Back</option>
+              {% endif %}
+            </select>
           </div>
 
           <button type="submit" class="btn btn-outline-primary">Save Settings</button>

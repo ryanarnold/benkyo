@@ -302,8 +302,16 @@ def review_start(request, deck_id):
             value=selected_tags
         )
 
+        question_side = request.POST.get('question_side')
+        question_side_setting = settings.get(setting='QUESTION_SIDE')
+        question_side_setting.value = question_side
+        question_side_setting.save()
+
     tags_setting = settings.get(setting='TAGS')
     context['selected_tags'] = split_comma_separated_into_list(tags_setting.value)
+
+    question_side_setting = settings.get(setting='QUESTION_SIDE')
+    context['question_side'] = question_side_setting.value
 
     return render(request, REVIEW_START_HTML, context)
 
