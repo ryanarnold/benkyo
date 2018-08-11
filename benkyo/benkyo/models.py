@@ -110,7 +110,15 @@ class Settings(Model):
         ('TAGS', 'TAGS'),
         ('QUESTION_SIDE', 'QUESTION_SIDE'),
         ('SHUFFLE', 'SHUFFLE'),
+        ('START_INDEX', 'START_INDEX'),
+        ('END_INDEX', 'END_INDEX'),
     )
+
+    TAGS = 'TAGS'
+    QUESTION_SIDE = 'QUESTION_SIDE'
+    SHUFFLE = 'SHUFFLE'
+    START_INDEX = 'START_INDEX'
+    END_INDEX = 'END_INDEX'
 
     deck_user = ForeignKey(DeckUser, on_delete=CASCADE)
     setting = CharField(max_length=100, choices=settings)
