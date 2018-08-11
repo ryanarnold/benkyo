@@ -9,5 +9,6 @@ def environment(**options):
     env.globals.update({
        'static': staticfiles_storage.url,
        'url': reverse,
+       'len': len
     })
     return env
