@@ -26,7 +26,7 @@ flashcard will be reviewed again.
     < 10 secs = MODERATE = 3 days
     > 10 secs = HARD = 1 day
 
-8. Users should be able to choose which cards to review based on tags.
+8. *DONE* Users should be able to choose which cards to review based on tags.
 
 9. Users should be able to choose how they will answer the flashcard (multiple choice or by typing)
 
@@ -37,5 +37,3 @@ flashcard will be reviewed again.
 12. Users should be able to choose the number of cards to review.
 
 13. Users should be able to choose whether the cards should be shuffled.
-
-14. Stats should be shown after reviewing.
