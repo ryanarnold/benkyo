@@ -129,11 +129,7 @@ def decks_create(request):
             role_cd='O'
         )
 
-        Settings.objects.create(
-            deck_user=deck_user,
-            setting='TAGS',
-            value=''
-        )
+        Settings.initialize(deck_user)
 
         return HttpResponseRedirect(reverse(DECKS_URL))
 
