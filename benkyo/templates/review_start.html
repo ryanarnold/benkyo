@@ -27,7 +27,15 @@
             <label for="input-front">Tags</label>
               {% for tag in tags %}
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="{{ tag }}" id="{{ tag }}">
+                  {% if selected_tags %}
+                    {% if tag in selected_tags %}
+                      <input class="form-check-input" type="checkbox" name="tags" value="{{ tag }}" id="{{ tag }}" checked>
+                    {% else %}
+                      <input class="form-check-input" type="checkbox" name="tags" value="{{ tag }}" id="{{ tag }}">
+                    {% endif %}
+                  {% else %}
+                    <input class="form-check-input" type="checkbox" name="tags" value="{{ tag }}" id="{{ tag }}">
+                  {% endif %}
                   <label class="form-check-label" for="{{ tag }}">{{ tag }}</label>
                 </div>
               {% endfor %}

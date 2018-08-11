@@ -13,7 +13,7 @@ from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import Card, CardTag, Deck, DeckUser, Review
+from .models import Card, CardTag, Deck, DeckUser, Review, Settings
 from .util import split_comma_separated_into_list
 
 HTTP_POST = 'POST'
@@ -285,6 +285,22 @@ def review_start(request, deck_id):
         'deck': deck,
         'tags': tags_sorted
     }
+
+    if request.method == HTTP_POST:
+        selected_tags = ','.join(request.POST.getlist('tags'))
+
+        deck_user = DeckUser.objects.get(deck=deck, user=request.user)
+
+        if Settings.objects.filter(deck_user=deck_user, setting='TAGS').exists():
+            Settings.objects.get(deck_user=deck_user, setting='TAGS').delete()
+        
+        Settings.objects.create(
+            deck_user=deck_user,
+            setting='TAGS',
+            value=selected_tags
+        )
+
+        context['selected_tags'] = selected_tags.split(',')
 
     return render(request, REVIEW_START_HTML, context)
 
