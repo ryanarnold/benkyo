@@ -312,22 +312,39 @@ def review_start(request, deck_id):
 @login_required
 def review(request, deck_id):
     deck = Deck.objects.get(deck_id=deck_id)
+    deck_user = DeckUser.objects.get(deck=deck, user=request.user)
+    settings = Settings.objects.filter(deck_user=deck_user)
 
     cards = Card.objects.filter(deck=deck)
     review_items = []
 
     for card in cards:
+        add_card = False
+        continue_to_next_card = True
+
+        if settings.filter(setting='TAGS').exists:
+            selected_tags = settings.get(setting='TAGS').value.split(',')
+            tags = CardTag.objects.filter(card=card)
+
+            for tag in tags:
+                if tag.tag in selected_tags:
+                    continue_to_next_card = False
+        else:
+            continue_to_next_card = False
+        
+        if continue_to_next_card:
+            continue                    
+
         review = Review.objects.filter(card=card, user=request.user)
         if review.exists():
             review = review[0]
 
             if datetime.datetime.today().date() >= review.date_to_review:
-                review_items.append({
-                    'cardId': card.card_id,
-                    'question': card.front,
-                    'answer': card.back
-                })
+                add_card = True
         else:
+            add_card = True
+        
+        if add_card:
             review_items.append({
                 'cardId': card.card_id,
                 'question': card.front,
