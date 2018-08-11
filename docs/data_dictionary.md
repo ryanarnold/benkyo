@@ -30,3 +30,9 @@
 - user_id (pk)
 - status_cd
 - date_to_review
+
+### Settings
+
+- deck_user (pk)
+- setting
+- value

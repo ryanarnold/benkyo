@@ -96,3 +96,14 @@ class Review(Model):
 
     class Meta:
         unique_together = (('card', 'user'),)
+
+
+class Settings(Model):
+    settings = (
+        ('TAGS', 'TAGS'),
+        ('DIRECTION', 'DIRECTION')
+    )
+
+    deck_user = ForeignKey(DeckUser, on_delete=CASCADE)
+    setting = CharField(max_length=100, choices=settings)
+    value = CharField(max_length=100)
