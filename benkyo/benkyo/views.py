@@ -342,11 +342,16 @@ def review(request, deck_id):
                 add_card = False
         
         if add_card:
-            review_items.append({
-                'cardId': card.card_id,
-                'question': card.front,
-                'answer': card.back
-            })
+            review_item = {'cardId': card.card_id}
+
+            if settings.get(setting='QUESTION_SIDE') == 'FRONT':
+                review_item['question'] = card.front
+                review_item['answer'] = card.back
+            else:
+                review_item['question'] = card.back
+                review_item['answer'] = card.front
+
+            review_items.append(review_item)
     
     if len(review_items) == 0:
         return HttpResponseRedirect(reverse(REVIEW_END_URL, args=(deck_id,)))
