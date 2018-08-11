@@ -30,7 +30,7 @@ flashcard will be reviewed again.
 
 9. Users should be able to choose how they will answer the flashcard (multiple choice or by typing)
 
-10. Users should be able to choose which side of the card will be the question.
+10. *DONE* Users should be able to choose which side of the card will be the question.
 
 11. After each review, statistics will be shown regarding how well the user did.
 
