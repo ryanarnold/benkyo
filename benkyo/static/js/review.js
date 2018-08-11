@@ -23,6 +23,14 @@ function finishReview() {
           alert(error);
         }
     });
+function nextQuestion() {
+    currentIndex += 1;
+
+    if (currentIndex < reviewItems.length) {
+        updateQuestion();
+        $('#input-answer').val('');
+    } else {
+    }
 }
 
 function checkAnswer() {
@@ -30,6 +38,7 @@ function checkAnswer() {
     var correctAnswer = reviewItems[currentIndex].answer;
 
     if (answer == correctAnswer) {
+<<<<<<< HEAD
         reviewItems[currentIndex].correct = true;
         reviewItems[currentIndex].timeToAnswer = secondsElapsed;
         alert('CORRECT!');
@@ -47,6 +56,16 @@ function checkAnswer() {
     } else {
         finishReview();
     }
+=======
+        $('#question').addClass('animated bounce faster');
+        // alert('CORRECT!');
+    } else {
+        $('#question').addClass('animated shake faster');
+        // alert('WRONG!');
+    }
+
+    setTimeout(nextQuestion, 1000);
+>>>>>>> 7951bca746513a5dc10dcb995c2b7615027f109c
 }
 
 $('#btn-submit').mouseup(checkAnswer);
