@@ -277,9 +277,13 @@ def cards_import(request, deck_id):
 @login_required
 def review_start(request, deck_id):
     deck = Deck.objects.get(deck_id=deck_id)
+    tags = CardTag.objects.filter(card__deck=deck).values('tag')
+    tags_sorted = list(set([x['tag'] for x in list(tags)]))
+    tags_sorted.sort()
 
     context = {
         'deck': deck,
+        'tags': tags_sorted
     }
 
     return render(request, REVIEW_START_HTML, context)

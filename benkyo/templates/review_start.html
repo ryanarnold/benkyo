@@ -25,7 +25,12 @@
         
           <div class="form-group">
             <label for="input-front">Tags</label>
-            <input type="text" class="form-control" id="input-front" name="front" autocomplete="off" required>
+              {% for tag in tags %}
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="{{ tag }}" id="{{ tag }}">
+                  <label class="form-check-label" for="{{ tag }}">{{ tag }}</label>
+                </div>
+              {% endfor %}
           </div>
 
           <button type="submit" class="btn btn-outline-primary">Save Settings</button>
