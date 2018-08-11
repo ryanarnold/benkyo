@@ -27,6 +27,7 @@ function finishReview() {
 
 function nextQuestion() {
     currentIndex += 1;
+    $('#question').removeClass('animated shake bounce faster');
 
     if (currentIndex < reviewItems.length) {
         updateQuestion();
