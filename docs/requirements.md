@@ -34,6 +34,6 @@ flashcard will be reviewed again.
 
 11. After each review, statistics will be shown regarding how well the user did.
 
-12. Users should be able to choose the number of cards to review.
+12. *DONE* Users should be able to choose the number of cards to review.
 
 13. *DONE* Users should be able to choose whether the cards should be shuffled.
