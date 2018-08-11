@@ -36,4 +36,4 @@ flashcard will be reviewed again.
 
 12. Users should be able to choose the number of cards to review.
 
-13. Users should be able to choose whether the cards should be shuffled.
+13. *DONE* Users should be able to choose whether the cards should be shuffled.

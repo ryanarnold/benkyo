@@ -67,6 +67,13 @@
             </select>
           </div>
 
+          <div class="form-group">
+            <label for="input-index-start">Cards to Review</label>
+            <input type="number" class="form-control" id="input-index-start" name="start_index" autocomplete="off" value="{{ start_index }}" required>
+            <label for="input-index-end">to</label>
+            <input type="number" class="form-control" id="input-index-end" name="end_index" autocomplete="off" value="{{ end_index }}" required>
+          </div>
+
           <button type="submit" class="btn btn-outline-primary">Save Settings</button>
           
           <a class="btn btn-outline-secondary" href="{{ url('decks') }}" role="button">Cancel</a>

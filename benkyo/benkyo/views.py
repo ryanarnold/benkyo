@@ -312,6 +312,16 @@ def review_start(request, deck_id):
         shuffle_setting.value = shuffle
         shuffle_setting.save()
 
+        start_index = request.POST.get('start_index')
+        start_index_setting = settings.get(setting='START_INDEX')
+        start_index_setting.value = start_index
+        start_index_setting.save()
+
+        end_index = request.POST.get('end_index')
+        end_index_setting = settings.get(setting='END_INDEX')
+        end_index_setting.value = end_index
+        end_index_setting.save()
+
     tags_setting = settings.get(setting='TAGS')
     context['selected_tags'] = split_comma_separated_into_list(tags_setting.value)
 
@@ -320,6 +330,12 @@ def review_start(request, deck_id):
 
     shuffle_setting = settings.get(setting='SHUFFLE')
     context['shuffle'] = shuffle_setting.value
+
+    start_index_setting = settings.get(setting='START_INDEX')
+    context['start_index'] = start_index_setting.value
+
+    end_index_setting = settings.get(setting='END_INDEX')
+    context['end_index'] = end_index_setting.value
 
     return render(request, REVIEW_START_HTML, context)
 
@@ -331,6 +347,14 @@ def review(request, deck_id):
     settings = Settings.objects.filter(deck_user=deck_user)
 
     cards = Card.objects.filter(deck=deck)
+
+    start_index = int(settings.get(setting='START_INDEX').value) - 1
+    end_index = int(settings.get(setting='END_INDEX').value)
+
+    cards = cards[start_index:end_index]
+
+    print(cards)
+
     review_items = []
 
     for card in cards:
@@ -352,7 +376,7 @@ def review(request, deck_id):
         if add_card:
             review_item = {'cardId': card.card_id}
 
-            if settings.get(setting='QUESTION_SIDE') == 'FRONT':
+            if settings.get(setting='QUESTION_SIDE').value == 'FRONT':
                 review_item['question'] = card.front
                 review_item['answer'] = card.back
             else:

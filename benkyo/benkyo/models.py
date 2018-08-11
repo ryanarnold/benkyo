@@ -135,3 +135,15 @@ class Settings(Model):
             setting='SHUFFLE',
             value='FALSE'
         )
+
+        Settings.objects.create(
+            deck_user=deck_user,
+            setting='START_INDEX',
+            value='1'
+        )
+
+        Settings.objects.create(
+            deck_user=deck_user,
+            setting='END_INDEX',
+            value='1'
+        )
