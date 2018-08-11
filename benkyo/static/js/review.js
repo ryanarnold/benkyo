@@ -40,7 +40,7 @@ function checkAnswer() {
     var answer = $('#input-answer').val();
     var correctAnswer = reviewItems[currentIndex].answer;
 
-    if (answer == correctAnswer) {
+    if (answer.toLowerCase() == correctAnswer.toLowerCase()) {
         $('#question').addClass('animated bounce faster');
         // alert('CORRECT!');
     } else {
