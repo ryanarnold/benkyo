@@ -123,10 +123,16 @@ def decks_create(request):
             private=private
         )
 
-        DeckUser.objects.create(
+        deck_user = DeckUser.objects.create(
             deck=deck,
             user=request.user,
             role_cd='O'
+        )
+
+        Settings.objects.create(
+            deck_user=deck_user,
+            setting='TAGS',
+            value=''
         )
 
         return HttpResponseRedirect(reverse(DECKS_URL))
@@ -287,24 +293,21 @@ def review_start(request, deck_id):
     }
 
     deck_user = DeckUser.objects.get(deck=deck, user=request.user)
+    settings = Settings.objects.filter(deck_user=deck_user)
 
     if request.method == HTTP_POST:
         selected_tags = ','.join(request.POST.getlist('tags'))
 
-        if Settings.objects.filter(deck_user=deck_user, setting='TAGS').exists():
-            Settings.objects.get(deck_user=deck_user, setting='TAGS').delete()
-        
+        settings.filter(setting='TAGS').delete()
+
         Settings.objects.create(
             deck_user=deck_user,
             setting='TAGS',
             value=selected_tags
         )
 
-        context['selected_tags'] = selected_tags.split(',')
-    else:
-        if Settings.objects.filter(deck_user=deck_user, setting='TAGS').exists():
-            tag_setting= Settings.objects.get(deck_user=deck_user, setting='TAGS')
-            context['selected_tags'] = tag_setting.value.split(',')
+    tags_setting = settings.get(setting='TAGS')
+    context['selected_tags'] = split_comma_separated_into_list(tags_setting.value)
 
     return render(request, REVIEW_START_HTML, context)
 
@@ -319,30 +322,20 @@ def review(request, deck_id):
     review_items = []
 
     for card in cards:
-        add_card = False
-        continue_to_next_card = True
+        selected_tags = split_comma_separated_into_list(settings.get(setting='TAGS').value)
+        tags = [tag.tag for tag in CardTag.objects.filter(card=card)]
 
-        if settings.filter(setting='TAGS').exists:
-            selected_tags = settings.get(setting='TAGS').value.split(',')
-            tags = CardTag.objects.filter(card=card)
-
-            for tag in tags:
-                if tag.tag in selected_tags:
-                    continue_to_next_card = False
-        else:
-            continue_to_next_card = False
-        
-        if continue_to_next_card:
-            continue                    
+        if len(set(selected_tags).intersection(set(tags))) == 0:
+            continue
 
         review = Review.objects.filter(card=card, user=request.user)
+        add_card = True
+
         if review.exists():
             review = review[0]
 
-            if datetime.datetime.today().date() >= review.date_to_review:
-                add_card = True
-        else:
-            add_card = True
+            if not review.review_today():
+                add_card = False
         
         if add_card:
             review_items.append({
