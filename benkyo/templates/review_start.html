@@ -24,6 +24,7 @@
           <h4>Settings</h4>
         
           <div class="form-group">
+            <br>
             <label for="input-front">Tags</label>
               {% for tag in tags %}
                 <div class="form-check">
@@ -40,14 +41,27 @@
                 </div>
               {% endfor %}
             
+            <br>
             <label for="input-question-side">Question Side</label>
-            <select name="question_side" id="input-question" class="form-control">
+            <select name="question_side" id="input-question-side" class="form-control">
               {% if question_side == 'FRONT' %}
                 <option value="FRONT" selected>Front</option>
                 <option value="BACK">Back</option>
               {% else %}
                 <option value="FRONT">Front</option>
                 <option value="BACK" selected>Back</option>
+              {% endif %}
+            </select>
+            
+            <br>
+            <label for="input-shuffle">Shuffle?</label>
+            <select name="shuffle" id="input-shuffle" class="form-control">
+              {% if shuffle == 'TRUE' %}
+                <option value="TRUE" selected>True</option>
+                <option value="FALSE">False</option>
+              {% else %}
+                <option value="TRUE">True</option>
+                <option value="FALSE" selected>False</option>
               {% endif %}
             </select>
           </div>

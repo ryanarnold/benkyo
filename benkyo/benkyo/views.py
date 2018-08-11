@@ -307,11 +307,19 @@ def review_start(request, deck_id):
         question_side_setting.value = question_side
         question_side_setting.save()
 
+        shuffle = request.POST.get('shuffle')
+        shuffle_setting = settings.get(setting='SHUFFLE')
+        shuffle_setting.value = shuffle
+        shuffle_setting.save()
+
     tags_setting = settings.get(setting='TAGS')
     context['selected_tags'] = split_comma_separated_into_list(tags_setting.value)
 
     question_side_setting = settings.get(setting='QUESTION_SIDE')
     context['question_side'] = question_side_setting.value
+
+    shuffle_setting = settings.get(setting='SHUFFLE')
+    context['shuffle'] = shuffle_setting.value
 
     return render(request, REVIEW_START_HTML, context)
 

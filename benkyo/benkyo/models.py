@@ -108,7 +108,8 @@ class Review(Model):
 class Settings(Model):
     settings = (
         ('TAGS', 'TAGS'),
-        ('QUESTION_SIDE', 'QUESTION_SIDE')
+        ('QUESTION_SIDE', 'QUESTION_SIDE'),
+        ('SHUFFLE', 'SHUFFLE'),
     )
 
     deck_user = ForeignKey(DeckUser, on_delete=CASCADE)
@@ -127,4 +128,10 @@ class Settings(Model):
             deck_user=deck_user,
             setting='QUESTION_SIDE',
             value='FRONT'
+        )
+
+        Settings.objects.create(
+            deck_user=deck_user,
+            setting='SHUFFLE',
+            value='FALSE'
         )
