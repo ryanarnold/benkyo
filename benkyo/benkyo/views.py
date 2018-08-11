@@ -286,10 +286,10 @@ def review_start(request, deck_id):
         'tags': tags_sorted
     }
 
+    deck_user = DeckUser.objects.get(deck=deck, user=request.user)
+
     if request.method == HTTP_POST:
         selected_tags = ','.join(request.POST.getlist('tags'))
-
-        deck_user = DeckUser.objects.get(deck=deck, user=request.user)
 
         if Settings.objects.filter(deck_user=deck_user, setting='TAGS').exists():
             Settings.objects.get(deck_user=deck_user, setting='TAGS').delete()
@@ -301,6 +301,10 @@ def review_start(request, deck_id):
         )
 
         context['selected_tags'] = selected_tags.split(',')
+    else:
+        if Settings.objects.filter(deck_user=deck_user, setting='TAGS').exists():
+            tag_setting= Settings.objects.get(deck_user=deck_user, setting='TAGS')
+            context['selected_tags'] = tag_setting.value.split(',')
 
     return render(request, REVIEW_START_HTML, context)
 
