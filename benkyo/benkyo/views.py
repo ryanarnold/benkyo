@@ -364,6 +364,9 @@ def review(request, deck_id):
     if len(review_items) == 0:
         return HttpResponseRedirect(reverse(REVIEW_END_URL, args=(deck_id,)))
 
+    if settings.get(setting='SHUFFLE').value == 'TRUE':
+        shuffle(review_items)
+
     context = {
         'deck': deck,
         'review_items': review_items
