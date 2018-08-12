@@ -37,3 +37,5 @@ flashcard will be reviewed again.
 12. *DONE* Users should be able to choose the number of cards to review.
 
 13. *DONE* Users should be able to choose whether the cards should be shuffled.
+
+14. The deck edit page should show statistics for each card.
