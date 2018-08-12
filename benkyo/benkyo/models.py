@@ -119,6 +119,7 @@ class Settings(Model):
     SHUFFLE = 'SHUFFLE'
     START_INDEX = 'START_INDEX'
     END_INDEX = 'END_INDEX'
+    FORMAT = 'FORMAT'
 
     deck_user = ForeignKey(DeckUser, on_delete=CASCADE)
     setting = CharField(max_length=100, choices=settings)
@@ -154,4 +155,10 @@ class Settings(Model):
             deck_user=deck_user,
             setting='END_INDEX',
             value='1'
+        )
+
+        Settings.objects.create(
+            deck_user=deck_user,
+            setting='FORMAT',
+            value='CHOICE'
         )

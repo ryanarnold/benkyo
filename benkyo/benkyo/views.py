@@ -332,6 +332,11 @@ def review_start(request, deck_id):
         end_index_setting.value = end_index
         end_index_setting.save()
 
+        format = request.POST.get('format')
+        format_setting = settings.get(setting=Settings.FORMAT)
+        format_setting.value = format
+        format_setting.save()
+
     tags_setting = settings.get(setting=Settings.TAGS)
     context['selected_tags'] = split_comma_separated_into_list(tags_setting.value)
 
@@ -346,6 +351,9 @@ def review_start(request, deck_id):
 
     end_index_setting = settings.get(setting=Settings.END_INDEX)
     context['end_index'] = end_index_setting.value
+
+    format_setting = settings.get(setting=Settings.FORMAT)
+    context['format'] = format_setting.value
 
     return render(request, REVIEW_START_HTML, context)
 
