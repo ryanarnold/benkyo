@@ -38,4 +38,4 @@ flashcard will be reviewed again.
 
 13. *DONE* Users should be able to choose whether the cards should be shuffled.
 
-14. The deck edit page should show statistics for each card.
+14. *DONE* The deck edit page should show statistics for each card.
