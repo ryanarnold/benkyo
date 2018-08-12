@@ -1,0 +1,1 @@
+env\Scripts\python benkyo\manage.py runserver
