@@ -155,16 +155,26 @@ def decks_delete(request, deck_id):
 def decks_edit(request, deck_id):
     deck = Deck.objects.get(deck_id=deck_id)
     cards = Card.objects.filter(deck=deck)
+    reviews = Review.objects.filter(card__deck=deck, user=request.user)
 
     if request.method == HTTP_POST:
         deck.name = request.POST.get('name')
         deck.private = True if request.POST.get('private') == 'yes' else False
         deck.save()
+    
+    for card in cards:
+        if reviews.filter(card=card).exists():
+            review = reviews.get(card=card)
+            card.status_cd = review.status_cd
+            card.date_to_review = review.date_to_review.strftime('%b %d')
+        else:
+            card.status_cd = '--'
+            card.date_to_review = '--'
 
     context = {
         'deck': deck,
         'cards': cards,
-        'first_card': cards[0] if len(cards) > 0 is not None else None
+        'first_card': cards[0] if len(cards) > 0 is not None else None,
     }
 
     return render(request, DECKS_EDIT_HTML, context)
