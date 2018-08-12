@@ -427,16 +427,16 @@ def review_assessment(request, deck_id):
 
             if time_to_answer < 7:
                 status_cd = 'EASY'
-                days_to_add = 7
+                days_to_add = 3
             elif time_to_answer < 10:
                 status_cd = 'MODERATE'
-                days_to_add = 3
+                days_to_add = 1
             else:
                 status_cd = 'HARD'
-                days_to_add = 1
+                days_to_add = 0
         else:
             status_cd = 'HARD'
-            days_to_add = 1
+            days_to_add = 0
 
         date_to_review = datetime.datetime.today() + datetime.timedelta(days=days_to_add)
 
