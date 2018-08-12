@@ -70,7 +70,16 @@
                 <td>{{ card.card_id - (first_card.card_id - 1) }}</td>
                 <td>{{ card.front }}</td>
                 <td>{{ card.back }}</td>
-                <td>{{ card.status_cd }}</td>
+                {% if card.status_cd == 'EASY' %}
+                  <td class="text-success">
+                {% elif card.status_cd == 'MODERATE' %}
+                  <td class="text-warning">
+                {% elif card.status_cd == 'HARD' %}
+                  <td class="text-danger">
+                {% else %}
+                  <td>
+                {% endif %}
+                  {{ card.status_cd }}</td>
                 <td>{{ card.date_to_review }}</td>
                 <td><a href="{{ url('cards-edit', args=(deck.deck_id, card.card_id)) }}" class="text-center text-warning">Edit</a></td>
                 <td><a href="{{ url('cards-delete', args=(deck.deck_id, card.card_id)) }}" class="text-center text-danger">Delete</a></td>
