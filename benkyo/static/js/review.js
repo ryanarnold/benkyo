@@ -50,7 +50,8 @@ function checkAnswer() {
         $question.addClass('animated bounce faster');
         reviewItems[currentIndex].correct = true;
     } else {
-        $question.addClass('animated shake faster');
+        $question.html(correctAnswer.toLowerCase());
+        // $question.addClass('animated shake faster');
         reviewItems[currentIndex].correct = false;
     }
 
