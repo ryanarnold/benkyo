@@ -391,6 +391,9 @@ def review(request, deck_id):
             if not review.review_today():
                 add_card = False
         
+        if card.front == '???' or card.back == '???':
+            add_card = False
+        
         if add_card:
             review_item = {'cardId': card.card_id}
 
