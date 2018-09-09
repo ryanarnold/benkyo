@@ -337,6 +337,12 @@ def review_start(request, deck_id):
         format_setting.value = format
         format_setting.save()
 
+        card_limit = request.POST.get('card_limit')
+        card_limit_setting = settings.get(setting=Settings.LIMIT)
+        card_limit_setting.value = card_limit
+        card_limit_setting.save()
+
+
     tags_setting = settings.get(setting=Settings.TAGS)
     context['selected_tags'] = split_comma_separated_into_list(tags_setting.value)
 
@@ -354,6 +360,9 @@ def review_start(request, deck_id):
 
     format_setting = settings.get(setting=Settings.FORMAT)
     context['format'] = format_setting.value
+
+    card_limit_setting = settings.get(setting=Settings.LIMIT)
+    context['card_limit'] = card_limit_setting.value
 
     return render(request, REVIEW_START_HTML, context)
 
@@ -411,6 +420,8 @@ def review(request, deck_id):
 
     if settings.get(setting=Settings.SHUFFLE).value == 'TRUE':
         shuffle(review_items)
+    
+    review_items = review_items[:int(settings.get(setting=Settings.LIMIT).value)]
 
     context = {
         'deck': deck,

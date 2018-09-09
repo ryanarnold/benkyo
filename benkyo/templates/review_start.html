@@ -75,6 +75,11 @@
           </div>
 
           <div class="form-group">
+            <label for="input-card-limit">Cards to Review</label>
+            <input type="number" class="form-control" id="input-card-limit" name="card_limit" autocomplete="off" value="{{ card_limit }}" required>
+          </div>
+
+          <div class="form-group">
             <label for="input-format">Format</label>
             <select name="format" id="input-format" class="form-control">
               {% if format == 'CHOICE' %}

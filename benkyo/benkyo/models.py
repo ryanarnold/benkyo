@@ -120,6 +120,7 @@ class Settings(Model):
     START_INDEX = 'START_INDEX'
     END_INDEX = 'END_INDEX'
     FORMAT = 'FORMAT'
+    LIMIT = 'LIMIT'
 
     deck_user = ForeignKey(DeckUser, on_delete=CASCADE)
     setting = CharField(max_length=100, choices=settings)
@@ -161,4 +162,10 @@ class Settings(Model):
             deck_user=deck_user,
             setting='FORMAT',
             value='CHOICE'
+        )
+
+        Settings.objects.create(
+            deck_user=deck_user,
+            setting='LIMIT',
+            value='50'
         )
