@@ -10,3 +10,7 @@ input {
 .buttons {
   text-align: center;
 }
+
+.row-review {
+  margin-top: 75px;
+}
