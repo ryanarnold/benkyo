@@ -1,38 +1,37 @@
-# Data Dictionary
+Table Deck {
+  deck_id int [pk]
+  name varchar
+  private boolean
+}
 
-### Deck
+Table User {
+  user_id int [pk]
+  email varchar
+  username varchar
+}
 
-- deck_id (pk)
-- name
-- private
+Table DeckUser {
+  id int [pk]
+  deck int [ref: > Deck.deck_id, unique]
+  user int [ref: > User.user_id, unique]
+  role_cd varchar [unique]
+}
 
-### Deck_User
+Table Card {
+   card_id int [pk]
+   deck int [ref: > Deck.deck_id]
+   front varchar
+   back varchar
+}
 
-- deck_id (pk)
-- user_id (pk)
-- role_cd
+Table CardTag {
+  card int [ref: > Card.card_id]
+  tag varchar
+}
 
-### Card
-
-- card_id (pk)
-- deck_id
-- front
-- back
-
-### Card_Tags
-
-- card_id (pk)
-- tag (pk)
-
-### Review
-
-- card_id (pk)
-- user_id (pk)
-- status_cd
-- date_to_review
-
-### Settings
-
-- deck_user (pk)
-- setting
-- value
+Table Review {
+  card int [ref: > Card.card_id]
+  user int [ref: > User.user_id]
+  status_cd varchar
+  date_to_review date
+}
