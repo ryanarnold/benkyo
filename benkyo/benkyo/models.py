@@ -84,12 +84,6 @@ class Review(Model):
 
     class Meta:
         unique_together = (('card', 'user'),)
-    
-    def review_today(self):
-        if datetime.datetime.today().date() >= self.date_to_review:
-            return True
-        else:
-            return False
 
 
 class Settings(Model):

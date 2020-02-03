@@ -166,10 +166,8 @@ def decks_edit(request, deck_id):
         if reviews.filter(card=card).exists():
             review = reviews.get(card=card)
             card.status_cd = review.status_cd
-            card.date_to_review = review.date_to_review.strftime('%b %d')
         else:
             card.status_cd = '--'
-            card.date_to_review = '--'
 
     context = {
         'deck': deck,
@@ -191,8 +189,6 @@ def cards_add(request, deck_id):
             back=request.POST.get('back')
         )
 
-        tags = split_comma_separated_into_list(request.POST.get('tags'))
-
         return HttpResponseRedirect(reverse(DECKS_EDIT_URL, args=(deck_id,)))
     
     context = {
@@ -213,14 +209,11 @@ def cards_edit(request, deck_id, card_id):
             back=request.POST.get('back')
         )
 
-        tags = split_comma_separated_into_list(request.POST.get('tags'))
-
         return HttpResponseRedirect(reverse(DECKS_EDIT_URL, args=(deck_id,)))
 
     context = {
         'deck': deck,
         'card': card,
-        'tags_string': ','.join([tag.tag for tag in tags])
     }
 
     return render(request, CARDS_EDIT_HTML, context)
@@ -283,26 +276,18 @@ def cards_import(request, deck_id):
 @login_required
 def review_start(request, deck_id):
     deck = Deck.objects.get(deck_id=deck_id)
-    tags_sorted = list(set([x['tag'] for x in list(tags)]))
-    tags_sorted.sort()
 
     context = {
         'deck': deck,
-        'tags': tags_sorted
     }
 
     deck_user = DeckUser.objects.get(deck=deck, user=request.user)
     settings = Settings.objects.filter(deck_user=deck_user)
 
     if request.method == HTTP_POST:
-        selected_tags = ','.join(request.POST.getlist('tags'))
-
-        settings.filter(setting=Settings.TAGS).delete()
-
         Settings.objects.create(
             deck_user=deck_user,
             setting=Settings.TAGS,
-            value=selected_tags
         )
 
         question_side = request.POST.get('question_side')
@@ -335,9 +320,6 @@ def review_start(request, deck_id):
         card_limit_setting.value = card_limit
         card_limit_setting.save()
 
-
-    tags_setting = settings.get(setting=Settings.TAGS)
-    context['selected_tags'] = split_comma_separated_into_list(tags_setting.value)
 
     question_side_setting = settings.get(setting=Settings.QUESTION_SIDE)
     context['question_side'] = question_side_setting.value
@@ -378,19 +360,11 @@ def review(request, deck_id):
     review_items = []
 
     for card in cards:
-        selected_tags = split_comma_separated_into_list(settings.get(setting=Settings.TAGS).value)
-
-        if len(set(selected_tags).intersection(set(tags))) == 0:
-            continue
-
         review = Review.objects.filter(card=card, user=request.user)
         add_card = True
 
         if review.exists():
             review = review[0]
-
-            if not review.review_today():
-                add_card = False
         
         if card.front == '???' or card.back == '???':
             add_card = False
@@ -444,21 +418,18 @@ def review_assessment(request, deck_id):
             status_cd = 'HARD'
             days_to_add = 0
 
-        date_to_review = datetime.datetime.today() + datetime.timedelta(days=days_to_add)
 
         review = Review.objects.filter(card_id=item['cardId'], user=request.user)
 
         if review:
             review = review[0]
             review.status_cd = status_cd
-            review.date_to_review = date_to_review
             review.save()
         else:
             Review.objects.create(
                 card=Card.objects.get(card_id=item['cardId']),
                 user=request.user,
-                status_cd=status_cd,
-                date_to_review=date_to_review
+                status_cd=status_cd
             )
     
     return JsonResponse({'hello': True})

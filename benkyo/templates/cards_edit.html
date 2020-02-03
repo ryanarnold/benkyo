@@ -28,11 +28,6 @@
             <label for="input-back">Back</label>
             <input type="text" class="form-control" id="input-back" name="back" autocomplete="off" value="{{ card.back }}" required>
           </div>
-          
-          <div class="form-group">
-            <label for="input-tags">Tags (separate by comma)</label>
-            <input type="text" class="form-control" id="input-tags" name="tags" autocomplete="off" value="{{ tags_string }}"required>
-          </div>
 
           <button type="submit" class="btn btn-outline-primary">Save</button>
           <a class="btn btn-outline-secondary" href="{{ url('decks-edit', args=(deck.deck_id,)) }}" role="button">Cancel</a>

@@ -59,7 +59,6 @@
               <th>Front</th>
               <th>Back</th>
               <th>Status</th>
-              <th>Next Review</th>
               <th class="width-small"></th>
               <th class="width-small"></th>
             </tr>
@@ -80,7 +79,6 @@
                   <td>
                 {% endif %}
                   {{ card.status_cd }}</td>
-                <td>{{ card.date_to_review }}</td>
                 <td><a href="{{ url('cards-edit', args=(deck.deck_id, card.card_id)) }}" class="text-center text-warning">Edit</a></td>
                 <td><a href="{{ url('cards-delete', args=(deck.deck_id, card.card_id)) }}" class="text-center text-danger">Delete</a></td>
               </tr>
