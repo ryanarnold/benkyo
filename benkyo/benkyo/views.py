@@ -13,7 +13,7 @@ from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import Card, CardTag, Deck, DeckUser, Review, Settings
+from .models import Card, Deck, DeckUser, Review, Settings
 from .util import split_comma_separated_into_list
 
 HTTP_POST = 'POST'
@@ -192,7 +192,6 @@ def cards_add(request, deck_id):
         )
 
         tags = split_comma_separated_into_list(request.POST.get('tags'))
-        CardTag.create_from_list(card, tags)
 
         return HttpResponseRedirect(reverse(DECKS_EDIT_URL, args=(deck_id,)))
     
@@ -207,7 +206,6 @@ def cards_add(request, deck_id):
 def cards_edit(request, deck_id, card_id):
     deck = Deck.objects.get(deck_id=deck_id)
     card = Card.objects.get(card_id=card_id)
-    tags = CardTag.objects.filter(card=card)
 
     if request.method == HTTP_POST:
         card.update(
@@ -215,11 +213,7 @@ def cards_edit(request, deck_id, card_id):
             back=request.POST.get('back')
         )
 
-        # Reset all tags for the card
-        CardTag.objects.filter(card=card).delete()
-
         tags = split_comma_separated_into_list(request.POST.get('tags'))
-        CardTag.create_from_list(card, tags)
 
         return HttpResponseRedirect(reverse(DECKS_EDIT_URL, args=(deck_id,)))
 
@@ -289,7 +283,6 @@ def cards_import(request, deck_id):
 @login_required
 def review_start(request, deck_id):
     deck = Deck.objects.get(deck_id=deck_id)
-    tags = CardTag.objects.filter(card__deck=deck).values('tag')
     tags_sorted = list(set([x['tag'] for x in list(tags)]))
     tags_sorted.sort()
 
@@ -386,7 +379,6 @@ def review(request, deck_id):
 
     for card in cards:
         selected_tags = split_comma_separated_into_list(settings.get(setting=Settings.TAGS).value)
-        tags = [tag.tag for tag in CardTag.objects.filter(card=card)]
 
         if len(set(selected_tags).intersection(set(tags))) == 0:
             continue

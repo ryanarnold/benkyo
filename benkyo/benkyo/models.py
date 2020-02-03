@@ -3,15 +3,14 @@ import datetime
 
 from django.conf import settings
 from django.contrib.auth.models import User
-from django.db.models import (CASCADE, AutoField, BooleanField, CharField,
-                              ForeignKey, Model, DateField)
+from django.db.models import (CASCADE, SET_NULL, AutoField, BooleanField, CharField,
+                              ForeignKey, Model, DateField, TextField)
 from openpyxl import load_workbook
 
 
 class Deck(Model):
     deck_id = AutoField(primary_key=True)
     name = CharField(max_length=100)
-    private = BooleanField()
 
     def import_cards_from_file(self, filename):
         workbook = load_workbook(path.join(settings.MEDIA_ROOT, filename))
@@ -25,7 +24,7 @@ class Deck(Model):
                 break
 
             back = sheet['B' + str(row)].value
-            tags = sheet['C' + str(row)].value.split(',')
+            category = sheet['C' + str(row)].value
 
             card = Card.objects.create(
                 deck=self,
@@ -33,11 +32,7 @@ class Deck(Model):
                 back=back
             )
 
-            for tag in tags:
-                CardTag.objects.create(
-                    card=card,
-                    tag=tag
-                )
+            card.category_cd = Card.objects.get(pk=category)
 
             row += 1
 
@@ -56,11 +51,17 @@ class DeckUser(Model):
         unique_together = (('deck', 'user', 'role_cd'),)
 
 
+class Category(Model):
+    category_cd = CharField(max_length=100, primary_key=True)
+
+
 class Card(Model):
     card_id = AutoField(primary_key=True)
     deck = ForeignKey(Deck, on_delete=CASCADE)
     front = CharField(max_length=100)
     back = CharField(max_length=100)
+    category = ForeignKey(Category, on_delete=SET_NULL, null=True)
+    info = TextField(max_length=1000, null=True)
 
     def update(self, front, back):
         self.front = front
@@ -68,32 +69,18 @@ class Card(Model):
         self.save()
 
 
-class CardTag(Model):
-    card = ForeignKey(Card, on_delete=CASCADE)
-    tag = CharField(max_length=100)
-
-    class Meta:
-        unique_together = (('card', 'tag'),)
-
-    def create_from_list(card, tag_list):
-        for tag in tag_list:
-            CardTag.objects.create(
-                card=card,
-                tag=tag
-            )
-
 
 class Review(Model):
     status = (
-        ('EASY', 'EASY'),
-        ('MODERATE', 'MODERATE'),
-        ('HARD', 'HARD')
+        ('UNKNOWN', 'UNKNOWN'),
+        ('SEEN', 'SEEN'),
+        ('FAMILIAR', 'FAMILIAR'),
+        ('KNOWN', 'KNOWN')
     )
 
     card = ForeignKey(Card, on_delete=CASCADE)
     user = ForeignKey(User, on_delete=CASCADE)
     status_cd = CharField(max_length=50, choices=status)
-    date_to_review = DateField()
 
     class Meta:
         unique_together = (('card', 'user'),)
