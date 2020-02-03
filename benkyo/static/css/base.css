@@ -1,5 +1,22 @@
 .btn-primary {
-  background-color: #6002ee;
+  background-color: #00b7cc;
   border-width: 0px;
-  border: #6002ee;
+  border: #00b7cc;
+}
+
+.btn-primary:hover {
+  background-color: #006e7a;
+}
+
+.btn-primary:focus   {
+  background-color: #00b7cc !important;
+}
+
+body {
+  background-color: #212121;
+  color: white;
+}
+
+.accent-color {
+  color: #00b7cc
 }
