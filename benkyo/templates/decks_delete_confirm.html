@@ -13,8 +13,8 @@
 
           <p>Are you sure you want to delete the deck <b>{{ deck.name }}</b>?</p>
 
-          <a class="btn btn-outline-danger" href="{{ url('decks-delete', args=(deck.deck_id,)) }}" role="button">Delete</a>
-          <a class="btn btn-outline-secondary" href="{{ url('decks') }}" role="button">Cancel</a>
+          <a class="btn btn-danger" href="{{ url('decks-delete', args=(deck.deck_id,)) }}" role="button">Delete</a>
+          <a class="btn btn-secondary" href="{{ url('decks') }}" role="button">Cancel</a>
 
         </div>
         <div class="col-md-2"></div>

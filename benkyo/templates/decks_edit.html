@@ -13,7 +13,7 @@
       <div class="col-md-2"></div>
       <div class="col-md-8">
 
-        <h3>Edit Deck</h3>
+        <h3 class="accent-color">Edit Deck</h3>
 
         <form action="{{ url('decks-edit', args=(deck.deck_id,)) }}" method="POST" id="form-deck">
 
@@ -38,36 +38,36 @@
             </select>
           </div>
 
-          <button type="submit" class="btn btn-outline-primary">Save</button>
-          <a class="btn btn-outline-secondary" href="{{ url('decks') }}" role="button">Cancel</a>
+          <button type="submit" class="btn btn-primary">Save</button>
+          <a class="btn btn-secondary" href="{{ url('decks') }}" role="button">Cancel</a>
 
         </form>
 
         <br>
-        <h3>Deck Cards</h3>
+        <h3 class="accent-color">Deck Cards</h3>
         <br>
 
         <a class="btn btn-primary" href="{{ url('cards-add', args=(deck.deck_id,)) }}" role="button">Add a Card</a>
         <a class="btn btn-primary" href="{{ url('cards-import', args=(deck.deck_id,)) }}" role="button">Import Cards</a>
-        <a class="btn btn-outline-danger" href="{{ url('cards-delete-all', args=(deck.deck_id,)) }}" role="button">Delete All</a>
+        <a class="btn btn-danger" href="{{ url('cards-delete-all', args=(deck.deck_id,)) }}" role="button">Delete All</a>
         <br><br>
 
         <table class="table" id="decks">
           <thead>
             <tr>
-              <th>#</th>
-              <th>Front</th>
-              <th>Back</th>
-              <th>Status</th>
-              <th class="width-small"></th>
-              <th class="width-small"></th>
+              <th class="accent-color">#</th>
+              <th class="accent-color">Front</th>
+              <th class="accent-color">Back</th class="accent-color">
+              <th class="accent-color">Status</th>
+              <th class="accent-color width-small"></th>
+              <th class="accent-color width-small"></th>
             </tr>
           </thead>
           <tbody>
             {% for card in cards %}
               <tr>
                 <td>{{ card.card_id - (first_card.card_id - 1) }}</td>
-                <td>{{ card.front }}</td>
+                <td class="accent-color">{{ card.front }}</td>
                 <td>{{ card.back }}</td>
                 {% if card.status_cd == 'EASY' %}
                   <td class="text-success">

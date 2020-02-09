@@ -22,10 +22,10 @@
 
           <form action="{{ url('cards-delete', args=(deck.deck_id, card.card_id)) }}" method="post" style="display: inline">
             <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">  
-            <button type="submit" class="btn btn-outline-danger">Delete</button>
+            <button type="submit" class="btn btn-danger">Delete</button>
           </form>
           
-          <a class="btn btn-outline-secondary" href="{{ url('decks-edit', args=(deck.deck_id,)) }}" role="button">Cancel</a>
+          <a class="btn btn-secondary" href="{{ url('decks-edit', args=(deck.deck_id,)) }}" role="button">Cancel</a>
 
         </div>
         <div class="col-md-2"></div>
