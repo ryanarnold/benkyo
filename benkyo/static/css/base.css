@@ -9,12 +9,10 @@
 }
 
 .btn-primary:focus   {
-  background-color: #00b7cc !important;
+  background-color: #006e7a !important;
 }
 
 body {
-  background-color: #212121;
-  color: white;
 }
 
 .accent-color {
@@ -28,19 +26,6 @@ input {
   outline: 0 none;
 }
 
-input:-webkit-autofill,
-input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active,
-.form-control {
-  background-color: #212121;
-  color: white;
-  -webkit-box-shadow: none !important;
-  -moz-box-shadow: none !important;
+.text-black {
+  color: #00b7cc;
 }
-
-.form-control:focus {
-  background-color: #212121;
-  color: white !important;
-}
-

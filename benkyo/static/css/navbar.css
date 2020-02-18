@@ -2,14 +2,16 @@
 /* Secondary Color: ##90ee02 */
 
 .benkyo-navbar {
-  background-color: #006e7a;
+  background-color: #00b7cc;
   margin-bottom: 30px;
 }
 
 #benkyo-heading {
   float: left;
   color: white;
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  /* font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; */
+  font-family: 'Merriweather Sans', 'Times New Roman', sans-serif;
+  padding-top: 10px;
 }
 
 #link-logout {

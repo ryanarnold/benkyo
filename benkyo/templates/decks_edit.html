@@ -24,20 +24,6 @@
             <input type="text" class="form-control" id="input-deck-name" name="name" autocomplete="off" value="{{ deck.name }}" required>
           </div>
 
-          <div class="form-group">
-            <label for="input-deck-name">Is this deck private?</label>
-            <select class="form-control" name="private" value="no">
-              {% if deck.private %}
-                <option value="yes" selected>Yes</option>
-                <option value="no">No</option>
-              {% else %}
-                <option value="yes">Yes</option>
-                <option value="no" selected>No</option>
-              {% endif %}
-              
-            </select>
-          </div>
-
           <button type="submit" class="btn btn-primary">Save</button>
           <a class="btn btn-secondary" href="{{ url('decks') }}" role="button">Cancel</a>
 
