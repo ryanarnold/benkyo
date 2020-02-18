@@ -119,13 +119,7 @@ class Settings(Model):
         ('END_INDEX', 'END_INDEX'),
     )
 
-    TAGS = 'TAGS'
-    QUESTION_SIDE = 'QUESTION_SIDE'
-    SHUFFLE = 'SHUFFLE'
-    START_INDEX = 'START_INDEX'
-    END_INDEX = 'END_INDEX'
-    FORMAT = 'FORMAT'
-    LIMIT = 'LIMIT'
+    REVIEW_TYPE = 'QUESTION_SIDE'
 
     deck_user = ForeignKey(DeckUser, on_delete=CASCADE)
     setting = CharField(max_length=100, choices=settings)
@@ -141,36 +135,6 @@ class Settings(Model):
 
         Settings.objects.create(
             deck_user=deck_user,
-            setting='QUESTION_SIDE',
-            value='FRONT'
-        )
-
-        Settings.objects.create(
-            deck_user=deck_user,
-            setting='SHUFFLE',
-            value='FALSE'
-        )
-
-        Settings.objects.create(
-            deck_user=deck_user,
-            setting='START_INDEX',
-            value='1'
-        )
-
-        Settings.objects.create(
-            deck_user=deck_user,
-            setting='END_INDEX',
-            value='1'
-        )
-
-        Settings.objects.create(
-            deck_user=deck_user,
-            setting='FORMAT',
-            value='CHOICE'
-        )
-
-        Settings.objects.create(
-            deck_user=deck_user,
-            setting='LIMIT',
-            value='50'
+            setting='REVIEW_TYPE',
+            value='RECOGNIZE'
         )

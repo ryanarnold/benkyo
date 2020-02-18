@@ -9,8 +9,8 @@
 
   <div class="container-fluid">
     <div class="row">
-      <div class="col-md-2"></div>
-      <div class="col-md-8">
+      <div class="col-md-4"></div>
+      <div class="col-md-4">
 
         <h3>Review Deck: {{ deck.name }}</h3>
 
@@ -24,19 +24,21 @@
           <h4>Settings</h4>
             
           <div class="form-group">
-            <label for="input-question-side">Question Side</label>
-            <select name="question_side" id="input-question-side" class="form-control">
-              {% if question_side == 'FRONT' %}
-                <option value="FRONT" selected>Front</option>
-                <option value="BACK">Back</option>
+            <label for="input-review-type">Question Side</label>
+            <select name="review_type" id="input-review-type" class="form-control">
+              {% if review_type == 'RECOGNIZE' %}
+                <option value="RECOGNIZE" selected>Recognize</option>
+                <option value="RECALL">Recall</option>
               {% else %}
-                <option value="FRONT">Front</option>
-                <option value="BACK" selected>Back</option>
+                <option value="RECOGNIZE">Recognize</option>
+                <option value="RECALL" selected>Recall</option>
               {% endif %}
             </select>
           </div>
+
+
             
-          <div class="form-group">
+          <!-- <div class="form-group">
             <label for="input-shuffle">Shuffle?</label>
             <select name="shuffle" id="input-shuffle" class="form-control">
               {% if shuffle == 'TRUE' %}
@@ -72,7 +74,7 @@
                 <option value="TYPE" selected>Type</option>
               {% endif %}
             </select>
-          </div>
+          </div> -->
 
           <button type="submit" class="btn btn-primary">Save Settings</button>
           
@@ -83,7 +85,7 @@
         <br><br>
 
       </div>
-      <div class="col-md-2"></div>
+      <div class="col-md-4"></div>
     </div>
   </div>
 

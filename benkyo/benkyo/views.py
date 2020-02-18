@@ -286,58 +286,17 @@ def review_start(request, deck_id):
 
     if request.method == HTTP_POST:
         Settings.objects.create(
-            deck_user=deck_user,
-            setting=Settings.TAGS,
+            deck_user=deck_user
         )
 
-        question_side = request.POST.get('question_side')
-        question_side_setting = settings.get(setting=Settings.QUESTION_SIDE)
-        question_side_setting.value = question_side
-        question_side_setting.save()
-
-        shuffle = request.POST.get('shuffle')
-        shuffle_setting = settings.get(setting=Settings.SHUFFLE)
-        shuffle_setting.value = shuffle
-        shuffle_setting.save()
-
-        start_index = request.POST.get('start_index')
-        start_index_setting = settings.get(setting=Settings.START_INDEX)
-        start_index_setting.value = start_index
-        start_index_setting.save()
-
-        end_index = request.POST.get('end_index')
-        end_index_setting = settings.get(setting=Settings.END_INDEX)
-        end_index_setting.value = end_index
-        end_index_setting.save()
-
-        format = request.POST.get('format')
-        format_setting = settings.get(setting=Settings.FORMAT)
-        format_setting.value = format
-        format_setting.save()
-
-        card_limit = request.POST.get('card_limit')
-        card_limit_setting = settings.get(setting=Settings.LIMIT)
-        card_limit_setting.value = card_limit
-        card_limit_setting.save()
+        review_type = request.POST.get('review_type')
+        review_type_setting = settings.get(setting=Settings.REVIEW_TYPE)
+        review_type_setting.value = review_type
+        review_type_setting.save()
 
 
-    question_side_setting = settings.get(setting=Settings.QUESTION_SIDE)
-    context['question_side'] = question_side_setting.value
-
-    shuffle_setting = settings.get(setting=Settings.SHUFFLE)
-    context['shuffle'] = shuffle_setting.value
-
-    start_index_setting = settings.get(setting=Settings.START_INDEX)
-    context['start_index'] = start_index_setting.value
-
-    end_index_setting = settings.get(setting=Settings.END_INDEX)
-    context['end_index'] = end_index_setting.value
-
-    format_setting = settings.get(setting=Settings.FORMAT)
-    context['format'] = format_setting.value
-
-    card_limit_setting = settings.get(setting=Settings.LIMIT)
-    context['card_limit'] = card_limit_setting.value
+    review_type_setting = settings.get(setting=Settings.REVIEW_TYPE)
+    context['review_type'] = review_type_setting.value
 
     return render(request, REVIEW_START_HTML, context)
 
@@ -350,10 +309,7 @@ def review(request, deck_id):
 
     cards = Card.objects.filter(deck=deck)
 
-    start_index = int(settings.get(setting=Settings.START_INDEX).value) - 1
-    end_index = int(settings.get(setting=Settings.END_INDEX).value)
-
-    cards = cards[start_index:end_index]
+    # cards = cards[start_index:end_index]
 
     print(cards)
 
@@ -372,7 +328,7 @@ def review(request, deck_id):
         if add_card:
             review_item = {'cardId': card.card_id}
 
-            if settings.get(setting=Settings.QUESTION_SIDE).value == 'FRONT':
+            if settings.get(setting=Settings.REVIEW_TYPE).value == 'RECOGNIZE':
                 review_item['question'] = card.front
                 review_item['answer'] = card.back
             else:
@@ -384,10 +340,10 @@ def review(request, deck_id):
     if len(review_items) == 0:
         return HttpResponseRedirect(reverse(REVIEW_END_URL, args=(deck_id,)))
 
-    if settings.get(setting=Settings.SHUFFLE).value == 'TRUE':
-        shuffle(review_items)
     
-    review_items = review_items[:int(settings.get(setting=Settings.LIMIT).value)]
+    shuffle(review_items)
+    
+    review_items = review_items[:10]
 
     context = {
         'deck': deck,
