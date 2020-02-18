@@ -43,7 +43,8 @@
             <tr>
               <th class="accent-color">#</th>
               <th class="accent-color">Front</th>
-              <th class="accent-color">Back</th class="accent-color">
+              <th class="accent-color">Back</th>
+              <th class="accent-color">Category</th>
               <th class="accent-color">Status</th>
               <th class="accent-color width-small"></th>
               <th class="accent-color width-small"></th>
@@ -55,6 +56,7 @@
                 <td>{{ card.card_id - (first_card.card_id - 1) }}</td>
                 <td class="accent-color">{{ card.front }}</td>
                 <td>{{ card.back }}</td>
+                <td>{{ card.category.category_cd }}</td>
                 {% if card.status_cd == 'EASY' %}
                   <td class="text-success">
                 {% elif card.status_cd == 'MODERATE' %}
