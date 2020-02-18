@@ -13,7 +13,7 @@ from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import Card, Deck, DeckUser, Review, Settings
+from .models import Card, Deck, DeckUser, Review, Settings, Category
 from .util import split_comma_separated_into_list
 
 HTTP_POST = 'POST'
@@ -297,6 +297,7 @@ def review_start(request, deck_id):
 
     review_type_setting = settings.get(setting=Settings.REVIEW_TYPE)
     context['review_type'] = review_type_setting.value
+    context['categories'] = Category.objects.all()
 
     return render(request, REVIEW_START_HTML, context)
 

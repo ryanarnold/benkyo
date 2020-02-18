@@ -35,23 +35,19 @@
               {% endif %}
             </select>
           </div>
-
-
             
-          <!-- <div class="form-group">
-            <label for="input-shuffle">Shuffle?</label>
-            <select name="shuffle" id="input-shuffle" class="form-control">
-              {% if shuffle == 'TRUE' %}
-                <option value="TRUE" selected>True</option>
-                <option value="FALSE">False</option>
-              {% else %}
-                <option value="TRUE">True</option>
-                <option value="FALSE" selected>False</option>
-              {% endif %}
+          <div class="form-group">
+            <label for="input-category">Category</label>
+            <select name="shuffle" id="input-category" class="form-control">
+              {% for category in categories %}
+                <option value="{{ category.category_cd }}">
+                  {{ category.category_cd }}
+                </option>
+              {% endfor %}
             </select>
           </div>
 
-          <div class="form-group">
+          <!-- <div class="form-group">
             <label for="input-index-start">Cards to Review</label>
             <input type="number" class="form-control" id="input-index-start" name="start_index" autocomplete="off" value="{{ start_index }}" required>
             <label for="input-index-end">to</label>
@@ -85,7 +81,7 @@
         <br><br>
 
       </div>
-      <div class="col-md-4"></div>
+      <div class="col-md-"></div>
     </div>
   </div>
 
