@@ -1,10 +1,10 @@
 from os import path
-import datetime
 
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.db.models import (CASCADE, SET_NULL, AutoField, BooleanField, CharField,
                               ForeignKey, Model, DateField, TextField)
+from django.core.exceptions import ObjectDoesNotExist
 from openpyxl import load_workbook
 
 
@@ -14,25 +14,49 @@ class Deck(Model):
 
     def import_cards_from_file(self, filename):
         workbook = load_workbook(path.join(settings.MEDIA_ROOT, filename))
-        sheet = workbook['MAIN']
+        sheet = workbook.active
 
         row = 2
         while True:
-            front = sheet['A' + str(row)].value
+            # front = sheet['A' + str(row)].value
 
-            if front == None:
+            # if front == None:
+            #     break
+
+            # back = sheet['B' + str(row)].value
+            # category = sheet['C' + str(row)].value
+
+            kana =  sheet['A' + str(row)].value
+            kanji = sheet['B' + str(row)].value
+            english = sheet['C' + str(row)].value
+            category = sheet['D' + str(row)].value
+
+            # Break once you reach a blank record
+            if kana is None:
                 break
 
-            back = sheet['B' + str(row)].value
-            category = sheet['C' + str(row)].value
-
-            card = Card.objects.create(
-                deck=self,
-                front=front,
-                back=back
-            )
-
-            card.category_cd = Card.objects.get(pk=category)
+            # Automatically create a category if it does not yet exist
+            try:
+                category = Category.objects.get(pk=category)
+            except ObjectDoesNotExist:
+                category = Category.objects.create(category_cd=category)
+            
+            if (kanji is None):
+                card = Card.objects.create(
+                    deck=self,
+                    front=kana,
+                    back=english,
+                    category=category,
+                    info=kana
+                )
+            else:
+                card = Card.objects.create(
+                    deck=self,
+                    front=kanji,
+                    back=english,
+                    category=category,
+                    info=''
+                )
 
             row += 1
 
