@@ -290,9 +290,18 @@ def review_start(request, deck_id):
         review_type_setting.value = review_type
         review_type_setting.save()
 
+        category = request.POST.get('category')
+        category_setting = settings.get(setting=Settings.CATEGORY)
+        category_setting.value = category
+        category_setting.save()
+
 
     review_type_setting = settings.get(setting=Settings.REVIEW_TYPE)
     context['review_type'] = review_type_setting.value
+
+    category_setting = settings.get(setting=Settings.CATEGORY)
+    context['selected_category'] = category_setting.value
+    
     context['categories'] = Category.objects.all()
 
     return render(request, REVIEW_START_HTML, context)

@@ -113,9 +113,11 @@ class Review(Model):
 class Settings(Model):
     settings = (
         ('REVIEW_TYPE', 'REVIEW_TYPE'),
+        ('CATEGORY', 'CATEGORY'),
     )
 
     REVIEW_TYPE = 'REVIEW_TYPE'
+    CATEGORY = 'CATEGORY'
 
     deck_user = ForeignKey(DeckUser, on_delete=CASCADE)
     setting = CharField(max_length=100, choices=settings)
@@ -125,7 +127,7 @@ class Settings(Model):
     def initialize(deck_user):
         Settings.objects.create(
             deck_user=deck_user,
-            setting='TAGS',
+            setting='CATEGORY',
             value=''
         )
 

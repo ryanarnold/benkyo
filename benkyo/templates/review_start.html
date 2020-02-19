@@ -38,9 +38,13 @@
             
           <div class="form-group">
             <label for="input-category">Category</label>
-            <select name="shuffle" id="input-category" class="form-control">
+            <select name="category" id="input-category" class="form-control">
               {% for category in categories %}
-                <option value="{{ category.category_cd }}">
+                {% if category.category_cd == selected_category %}
+                  <option value="{{ category.category_cd }}" selected>
+                {% else %}
+                  <option value="{{ category.category_cd }}">
+                {% endif %}
                   {{ category.category_cd }}
                 </option>
               {% endfor %}
