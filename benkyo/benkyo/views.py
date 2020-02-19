@@ -154,7 +154,7 @@ def decks_delete(request, deck_id):
 @login_required
 def decks_edit(request, deck_id):
     deck = Deck.objects.get(deck_id=deck_id)
-    cards = Card.objects.filter(deck=deck)
+    cards = Card.objects.filter(deck=deck).order_by('category')
     reviews = Review.objects.filter(card__deck=deck, user=request.user)
 
     if request.method == HTTP_POST:
@@ -162,12 +162,15 @@ def decks_edit(request, deck_id):
         deck.private = True if request.POST.get('private') == 'yes' else False
         deck.save()
     
+    i = 1
     for card in cards:
         if reviews.filter(card=card).exists():
             review = reviews.get(card=card)
             card.status_cd = review.status_cd
         else:
             card.status_cd = '--'
+        card.card_id = i
+        i += 1
 
     context = {
         'deck': deck,

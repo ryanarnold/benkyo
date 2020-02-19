@@ -53,7 +53,7 @@
           <tbody>
             {% for card in cards %}
               <tr>
-                <td>{{ card.card_id - (first_card.card_id - 1) }}</td>
+                <td>{{ card.card_id }}</td>
                 <td class="accent-color">{{ card.front }}</td>
                 <td>{{ card.back }}</td>
                 <td>{{ card.category.category_cd }}</td>
@@ -72,6 +72,7 @@
               </tr>
             {% endfor %}
           </tbody>
+
         </table>
 
       </div>
