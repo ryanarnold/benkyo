@@ -285,10 +285,6 @@ def review_start(request, deck_id):
     settings = Settings.objects.filter(deck_user=deck_user)
 
     if request.method == HTTP_POST:
-        Settings.objects.create(
-            deck_user=deck_user
-        )
-
         review_type = request.POST.get('review_type')
         review_type_setting = settings.get(setting=Settings.REVIEW_TYPE)
         review_type_setting.value = review_type
@@ -314,7 +310,7 @@ def review(request, deck_id):
 
     print(cards)
 
-    review_items = []
+    review_items = []   
 
     for card in cards:
         review = Review.objects.filter(card=card, user=request.user)

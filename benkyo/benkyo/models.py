@@ -112,14 +112,10 @@ class Review(Model):
 
 class Settings(Model):
     settings = (
-        ('TAGS', 'TAGS'),
-        ('QUESTION_SIDE', 'QUESTION_SIDE'),
-        ('SHUFFLE', 'SHUFFLE'),
-        ('START_INDEX', 'START_INDEX'),
-        ('END_INDEX', 'END_INDEX'),
+        ('REVIEW_TYPE', 'REVIEW_TYPE'),
     )
 
-    REVIEW_TYPE = 'QUESTION_SIDE'
+    REVIEW_TYPE = 'REVIEW_TYPE'
 
     deck_user = ForeignKey(DeckUser, on_delete=CASCADE)
     setting = CharField(max_length=100, choices=settings)
