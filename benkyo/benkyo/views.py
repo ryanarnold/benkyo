@@ -312,14 +312,12 @@ def review(request, deck_id):
     deck = Deck.objects.get(deck_id=deck_id)
     deck_user = DeckUser.objects.get(deck=deck, user=request.user)
     settings = Settings.objects.filter(deck_user=deck_user)
+    setting_category = settings.get(setting=Settings.CATEGORY).value
+    setting_review_type = settings.get(setting=Settings.REVIEW_TYPE).value
 
-    cards = Card.objects.filter(deck=deck)
+    cards = Card.objects.filter(deck=deck, category__category_cd=setting_category)
 
-    # cards = cards[start_index:end_index]
-
-    print(cards)
-
-    review_items = []   
+    review_items = []
 
     for card in cards:
         review = Review.objects.filter(card=card, user=request.user)
@@ -327,10 +325,7 @@ def review(request, deck_id):
 
         if review.exists():
             review = review[0]
-        
-        if card.front == '???' or card.back == '???':
-            add_card = False
-        
+
         if add_card:
             review_item = {'cardId': card.card_id}
 
@@ -346,7 +341,6 @@ def review(request, deck_id):
     if len(review_items) == 0:
         return HttpResponseRedirect(reverse(REVIEW_END_URL, args=(deck_id,)))
 
-    
     shuffle(review_items)
     
     review_items = review_items[:10]
